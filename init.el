@@ -89,6 +89,14 @@
   (when (file-exists-p custom-file)
     (load custom-file)))
 
+(use-package helpful
+  :bind (("C-h f"	. helpful-function)
+         ("C-h C"	. helpful-command)
+         ("C-h M"	. helpful-macro)
+         ("C-h L"	. helpful-callable)
+         ("C-h ."	. helpful-at-point)
+         ("C-h v"	. helpful-variable)))
+
 (use-package ivy
   :demand t
   :diminish
