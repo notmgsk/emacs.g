@@ -268,6 +268,13 @@
   (add-to-list 'tramp-default-proxies-alist
                (list (regexp-quote (system-name)) nil nil)))
 
+(use-package which-key
+  :defer 5
+  :diminish
+  :commands which-key-mode
+  :config
+  (which-key-mode))
+
 (progn ;     startup
   (message "Loading %s...done (%.3fs)" user-init-file
            (float-time (time-subtract (current-time)
