@@ -83,8 +83,39 @@
   (when (file-exists-p custom-file)
     (load custom-file)))
 
+(use-package ivy
+  :demand t
+  :diminish
+
+  :custom
+  (ivy-dynamic-exhibit-delay-ms 200)
+  (ivy-height 14)
+  (ivy-initial-inputs-alist nil t)
+  (ivy-magic-tilde nil)
+  (ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+  (ivy-use-virtual-buffers t)
+  (ivy-wrap t)
+
+  :config
+  (ivy-mode 1)
+  (ivy-set-occur 'ivy-switch-buffer 'ivy-switch-buffer-occur)
+  (setq ivy-use-virtual-buffers t
+	ivy-count-format "%d/%d "))
+
 (use-package server
   :config (or (server-running-p) (server-mode)))
+
+(use-package swiper
+  :after ivy
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper))
+  :bind (:map swiper-map
+              ("M-y" . yank)
+              ("M-%" . swiper-query-replace)
+              ("M-h" . swiper-avy)
+              ("M-c" . swiper-mc))
+  :bind (:map isearch-mode-map
+              ("C-." . swiper-from-isearch)))
 
 (progn ;     startup
   (message "Loading early birds...done (%.3fs)"
