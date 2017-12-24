@@ -190,6 +190,23 @@
   :defer t
   :config (setq Man-width 80))
 
+(use-package org
+  :bind (("C-c c" . org-capture))
+  :bind (:map org-mode-map
+	      ("C-_" . undo)
+	      ("<C-M-return>" . org-insert-item))
+  :hook (org-mode . auto-fill-mode)
+  ;; TODO this isn't working
+  :hook (org-mode . (lambda () (setq fill-column 80)))
+  :config
+  (setq org-directory "~/hackery/org")
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+  (setq org-capture-templates
+        '(("t" "Brief todo" entry (file+headline org-default-notes-file "Tasks")
+           "* TODO %?\n  %i\n")
+          ("T" "Todo" entry (file+headline org-default-notes-file "Tasks")
+           "* TODO %?\n %i\n %a"))))
+
 (use-package paren
   :config (show-paren-mode))
 
