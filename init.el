@@ -89,6 +89,11 @@
   (when (file-exists-p custom-file)
     (load custom-file)))
 
+(use-package elpy
+  :config
+  (elpy-enable)
+  (elpy-use-ipython))
+
 (use-package helpful
   :bind (("C-h f"	. helpful-function)
          ("C-h C"	. helpful-command)
