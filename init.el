@@ -57,6 +57,26 @@
   :init (setq epkg-repository
               (expand-file-name "var/epkgs/" user-emacs-directory)))
 
+(use-package counsel
+  :after ivy
+  :demand t
+  :diminish
+  ;; :custom (counsel-find-file-ignore-regexp
+  ;;          (concat "\\(\\`\\.\\|"
+  ;;                  (regexp-opt completion-ignored-extensions)
+  ;;                  "\\)"))
+  :bind (("C-*"     . counsel-org-agenda-headlines)
+         ("C-x C-f" . counsel-find-file)
+         ("M-x"     . counsel-M-x))
+  :commands (counsel-minibuffer-history
+             counsel-find-library
+             counsel-unicode-char)
+  :init
+  (bind-key "M-r" #'counsel-minibuffer-history minibuffer-local-map)
+  :config
+  (add-to-list 'ivy-sort-matches-functions-alist
+	       '(counsel-find-file . ivy--sort-files-by-date)))
+
 (use-package custom
   :config
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
