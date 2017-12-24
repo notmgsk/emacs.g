@@ -232,6 +232,102 @@
           ("T" "Todo" entry (file+headline org-default-notes-file "Tasks")
            "* TODO %?\n %i\n %a"))))
 
+(use-package mu4e
+  :defer t
+  :init
+  (setq mail-user-agent 'mu4e-user-agent)
+  :config
+  (require 'mu4e-contrib)
+  (setq mu4e-completing-read-function 'completing-read)
+  (setq mu4e-compose-dont-reply-to-self t)
+  (setq mu4e-compose-signature-auto-include nil)
+  (setq mu4e-maildir "~/mail"
+        mu4e-trash-folder "/Trash"
+        mu4e-refile-folder "/Archive"
+        mu4e-get-mail-command "offlineimap"
+        mu4e-update-interval 300
+        mu4e-compose-signature-auto-include nil
+        mu4e-view-show-images t
+        mu4e-view-show-addresses t
+        mu4e-view-prefer-html t
+        ;; mu4e-html2text-command "elinks -dump -dump-width 100"
+        ;; mu4e-html2text-command "html2markdown"
+        mu4e-html2text-command 'mu4e-shr2text
+        shr-color-visible-luminance-min 60
+        shr-color-visible-distance-min 5
+        )
+  (add-to-list 'mu4e-bookmarks
+               (make-mu4e-bookmark
+                :name "Uni unread/flagged"
+                :query "maildir:/uni flag:unread OR maildir:/uni flag:flagged"
+                :key ?s))
+  ;; Stops shr using funky colours that make things unreadable.
+  (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
+  (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+
+  (setq org-mu4e-link-query-in-headers-mode nil)
+  (setq mu4e-sent-folder "/sent"
+        mu4e-drafts-folder "/drafts"
+        smtpmail-default-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 587
+        message-send-mail-function 'smtpmail-send-it)
+  (setq mu4e-headers-hide-predicate
+        (lambda (msg)
+          (member 'trashed (mu4e-message-field msg :flags))))
+
+  (setq my/mu4e-uni-context
+        (make-mu4e-context
+         :name "Uni"
+         :enter-func (lambda () (mu4e-message "Entering Uni context"))
+         :leave-func (lambda () (mu4e-message "Leaving Uni context"))
+         :match-func (lambda (msg)
+                       (when msg
+                         (mu4e-message-contact-field-matches
+                          msg
+                          '(:to :cc :bcc) '("ppyms3@nottingham.ac.uk"
+                                            "ppyms3@exmail.nottingham.ac.uk"))))
+         :vars '((user-mail-address . "ppyms3@nottingham.ac.uk")
+                 (user-full-name . "Mark Skilbeck")
+                 (mu4e-sent-folder . "/sent")
+                 (user-mail-address . "ppyms3@exmail.nottingham.ac.uk")
+                 (smtpmail-smtp-user . "ppyms3@ad.nottingham.ac.uk")
+                 (smtp-local-domain . "nottingham.ac.uk")
+                 (smtpmail-default-smtp-server . "smtp.nottingham.ac.uk")
+                 (smtpmail-smtp-server . "smtp.nottingham.ac.uk")
+                 (smtpmail-smtp-service . 25)
+                 ;; (smtp-local-domain . "office365.com")
+                 ;; (smtpmail-default-smtp-server . "smtp.office365.com")
+                 ;; (smtpmail-smtp-server . "smtp.office365.com")
+                 ;; (smtpmail-smtp-service . 587)
+                 )))
+
+  (setq my/mu4e-personal-context
+        (make-mu4e-context
+         :name "Personal"
+         :enter-func (lambda () (mu4e-message "Entering Personal context"))
+         :leave-func (lambda () (mu4e-message "Leaving Personal context"))
+         :match-func (lambda (msg)
+                       (when msg
+                         (mu4e-message-contact-field-matches
+                          msg
+                          '(:to :cc :bcc) "markskilbeck@gmail.com")))
+         :vars '((user-mail-address . "markskilbeck@gmail.com")
+                 (user-full-name . "Mark Skilbeck")
+                 (mu4e-sent-folder . "/sent")
+                 (smtpmail-smtp-user . "markskilbeck@gmail.com")
+                 (smtp-local-domain . "gmail.com")
+                 (smtpmail-default-smtp-server . "smtp.gmail.com")
+                 (smtpmail-smtp-server . "smtp.gmail.com")
+                 (smtpmail-smtp-service . 587))))
+
+  (setq mu4e-contexts (list my/mu4e-personal-context my/mu4e-uni-context))
+  (setq mu4e-context-policy 'pick-first)
+  (setq mu4e-compose-context-policy 'ask)
+
+  (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
+  (add-hook 'visual-line-mode-hook 'visual-fill-column-mode))
+
 (use-package paren
   :config (show-paren-mode))
 
@@ -324,7 +420,7 @@
     (tool-bar-mode -1)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
-    (load-theme)
+    (load-theme 'leuven)
     (setq initial-frame-parameters
           `((font . ,my/emacs-font)))
     (fset 'yes-or-no-p 'y-or-n-p)
