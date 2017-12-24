@@ -421,8 +421,12 @@
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
     (load-theme 'leuven)
-    (setq initial-frame-parameters
-          `((font . ,my/emacs-font)))
+    (setq default-frame-alist
+          `((font . ,my/emacs-font)
+            (tool-bar-lines . 0)
+            (menu-bar-lines . 0)
+            (vertical-scroll-bars . nil)
+            (horizontal-scroll-bars . nil)))
     (fset 'yes-or-no-p 'y-or-n-p)
     (set-frame-font my/emacs-font)
     (setq indent-tabs-mode nil)))
