@@ -180,6 +180,12 @@
   (setq magit-repository-directories
 	'("~/hackery/org" "~/hackery/weathr")))
 
+(use-package multi-magit
+  ;; :load-path "site-lisp/multi-magit"
+  :after magit
+  :commands (multi-magit-list-repositories
+	     multi-magit-status))
+
 (use-package man
   :defer t
   :config (setq Man-width 80))

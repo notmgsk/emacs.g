@@ -64,6 +64,9 @@
 [submodule "magit-popup"]
 	path = lib/magit-popup
 	url = git@github.com:magit/magit-popup.git
+[submodule "multi-magit"]
+	path = lib/multi-magit
+	url = git@github.com:notmgsk/emacs.g.git
 [submodule "packed"]
 	path = lib/packed
 	url = git@github.com:emacscollective/packed.git
