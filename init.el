@@ -169,15 +169,16 @@
     (setq indent-tabs-mode nil))
   (add-hook 'lisp-interaction-mode-hook #'indent-spaces-mode))
 
+(global-set-key (kbd "M-m") nil)
 (use-package magit
   :defer t
-  :bind (("C-x g"   . magit-status)
-         ("C-x M-g" . magit-dispatch-popup))
+  ;; :load-path ("site-lisp/magit/lisp")
+  :commands (magit-clone)
+  :general
+  ("M-m gs" #'magit-status)
   :config
-  (magit-add-section-hook 'magit-status-sections-hook
-                          'magit-insert-modules
-                          'magit-insert-stashes
-                          'append))
+  (setq magit-repository-directories
+	'("~/hackery/org" "~/hackery/weathr")))
 
 (use-package man
   :defer t
