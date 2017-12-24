@@ -316,7 +316,20 @@
   (let ((file (expand-file-name (concat (user-real-login-name) ".el")
                                 user-emacs-directory)))
     (when (file-exists-p file)
-      (load file))))
+      (load file))
+
+    (defconst my/emacs-font
+      "-pyrs-Roboto Mono-thin-normal-normal-*-18-*-*-*-*-0-iso10646-1")
+    ;; Should maybe use (when window-system ...) here.
+    (tool-bar-mode -1)
+    (menu-bar-mode -1)
+    (scroll-bar-mode -1)
+    (load-theme)
+    (setq initial-frame-parameters
+          `((font . ,my/emacs-font)))
+    (fset 'yes-or-no-p 'y-or-n-p)
+    (set-frame-font my/emacs-font)
+    (setq indent-tabs-mode nil)))
 
 ;; Local Variables:
 ;; indent-tabs-mode: nil
