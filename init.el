@@ -53,6 +53,8 @@
             'auto-compile-inhibit-compile-detached-git-head))
 
 (use-package avy
+  :general
+  ("M-m jc" #'avy-goto-char)
   :config
   (avy-setup-default))
 
