@@ -30,6 +30,26 @@
   (require  'use-package)
   (setq use-package-verbose t))
 
+(eval-and-compile
+  (mapc #'(lambda (entry)
+            (define-prefix-command (cdr entry))
+            (bind-key (car entry) (cdr entry)))
+        '(("<C-m>" . my-ctrl-m-map)
+
+          ("C-h e" . my-ctrl-h-e-map)
+
+          ("C-c e" . my-ctrl-c-e-map)
+          ("C-c m" . my-ctrl-c-m-map)
+          ("C-c y" . my-ctrl-c-y-map)
+
+          ("C-."   . my-ctrl-dot-map)
+          ("C-. =" . my-ctrl-dot-equals-map)
+          ("C-. f" . my-ctrl-dot-f-map)
+          ("C-. g" . my-ctrl-dot-g-map)
+          ("C-. h" . my-ctrl-dot-h-map)
+          ("C-. m" . my-ctrl-dot-m-map)
+          ("C-. r" . my-ctrl-dot-r-map))))
+
 (use-package general
   :load-path "site-lisp/general.el"
   :bind ("M-m"))
