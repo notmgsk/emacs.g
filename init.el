@@ -323,10 +323,7 @@
 
   (setq mu4e-contexts (list my/mu4e-personal-context my/mu4e-uni-context))
   (setq mu4e-context-policy 'pick-first)
-  (setq mu4e-compose-context-policy 'ask)
-
-  (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
-  (add-hook 'visual-line-mode-hook 'visual-fill-column-mode))
+  (setq mu4e-compose-context-policy 'ask))
 
 (use-package paren
   :config (show-paren-mode))
