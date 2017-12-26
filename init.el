@@ -375,6 +375,11 @@
 (use-package simple
   :config (column-number-mode))
 
+(use-package smart-mode-line
+  :config
+  (setq sml/theme 'light)
+  (sml/setup))
+
 (progn ;    `text-mode'
   (add-hook 'text-mode-hook #'indicate-buffer-boundaries-left))
 

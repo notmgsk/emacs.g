@@ -76,12 +76,6 @@
 [submodule "magit-popup"]
 	path = lib/magit-popup
 	url = git@github.com:magit/magit-popup.git
-[submodule "multi-magit"]
-	path = lib/multi-magit
-	url = git@github.com:notmgsk/emacs.g.git
-[submodule "org"]
-	path = lib/org
-	url = git://orgmode.org/org-mode.git
 [submodule "mu4e"]
 	path = lib/mu4e
 	url = git@github.com:djcb/mu.git
@@ -95,6 +89,12 @@
 	build-step = make -C mu4e > /dev/null
 	build-step = "(borg-update-autoloads \"mu4e\")"
 	load-path = mu4e
+[submodule "multi-magit"]
+	path = lib/multi-magit
+	url = git@github.com:notmgsk/emacs.g.git
+[submodule "org"]
+	path = lib/org
+	url = git://orgmode.org/org-mode.git
 [submodule "packed"]
 	path = lib/packed
 	url = git@github.com:emacscollective/packed.git
@@ -104,12 +104,18 @@
 [submodule "pyvenv"]
 	path = lib/pyvenv
 	url = git@github.com:jorgenschaefer/pyvenv.git
+[submodule "rich-minority"]
+	path = lib/rich-minority
+	url = git@github.com:Malabarba/rich-minority.git
 [submodule "s"]
 	path = lib/s
 	url = git@github.com:magnars/s.el.git
 [submodule "shut-up"]
 	path = lib/shut-up
 	url = git@github.com:cask/shut-up.git
+[submodule "smart-mode-line"]
+	path = lib/smart-mode-line
+	url = git@github.com:Malabarba/smart-mode-line.git
 [submodule "swiper"]
 	path = lib/swiper
 	url = git@github.com:notmgsk/emacs.g.git
