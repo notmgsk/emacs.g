@@ -105,6 +105,8 @@
              counsel-unicode-char)
   :init
   (bind-key "M-r" #'counsel-minibuffer-history minibuffer-local-map)
+  :general
+  ("M-m ry" #'counsel-yank-pop)
   :config
   (add-to-list 'ivy-sort-matches-functions-alist
 	       '(counsel-find-file . ivy--sort-files-by-date)))
