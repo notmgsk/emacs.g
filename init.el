@@ -208,8 +208,8 @@
   :general
   ("M-m gs" #'magit-status)
   :config
-  (setq magit-repository-directories
-	'("~/hackery/org" "~/hackery/weathr"))
+  (setq-default magit-repository-directories
+                '("~/hackery/" . 1))
   (magit-add-section-hook 'magit-status-sections-hook
                           'magit-insert-modules
                           'magit-insert-stashes
