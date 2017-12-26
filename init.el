@@ -72,7 +72,13 @@
   (add-hook 'auto-compile-inhibit-compile-hook
             'auto-compile-inhibit-compile-detached-git-head))
 
+(use-package ace-window
+  :after avy
+  :general
+  ("M-m jw" #'ace-window))
+
 (use-package avy
+  :after ivy
   :general
   ("M-m jc" #'avy-goto-char)
   :config
