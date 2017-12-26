@@ -203,7 +203,11 @@
   ("M-m gs" #'magit-status)
   :config
   (setq magit-repository-directories
-	'("~/hackery/org" "~/hackery/weathr")))
+	'("~/hackery/org" "~/hackery/weathr"))
+  (magit-add-section-hook 'magit-status-sections-hook
+                          'magit-insert-modules
+                          'magit-insert-stashes
+                          'append))
 
 (use-package multi-magit
   ;; :load-path "site-lisp/multi-magit"
