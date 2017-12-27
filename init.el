@@ -211,7 +211,7 @@
   ("M-m gs" #'magit-status)
   :config
   (setq-default magit-repository-directories
-                '("~/hackery/" . 1))
+                '(("~/hackery/" . 1)))
   (magit-add-section-hook 'magit-status-sections-hook
                           'magit-insert-modules
                           'magit-insert-stashes
