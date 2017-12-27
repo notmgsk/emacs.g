@@ -233,7 +233,6 @@
 	      ("C-_" . undo)
 	      ("<C-M-return>" . org-insert-item))
   :hook (org-mode . auto-fill-mode)
-  ;; TODO this isn't working
   :hook (org-mode . (lambda () (setq fill-column 80)))
   :config
   (setq org-directory "~/hackery/org")
