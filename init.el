@@ -247,6 +247,7 @@
   :defer t
   :init
   (setq mail-user-agent 'mu4e-user-agent)
+  :commands (mu4e)
   :config
   (require 'mu4e-contrib)
   (setq mu4e-completing-read-function 'completing-read)
