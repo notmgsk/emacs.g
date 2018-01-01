@@ -154,6 +154,22 @@
 (use-package server
   :config (or (server-running-p) (server-mode)))
 
+(use-package slime
+  :commands (slime slime-mode)
+  :init
+  (progn
+    (setq slime-contribs '(slime-fancy
+                           slime-indentation
+                           slime-sbcl-exts
+                           slime-scratch
+                           slime-company)
+          inferior-lisp-program "sbcl"
+          slime-complete-symbol*-fancy t
+          slime-complete-symbol-function 'slime-fuzzy-complete-symbol
+          common-lisp-hyperspec-root "~/hyperspec/HyperSpec/"))
+  :config
+  (slime-setup))
+
 (use-package swiper
   :after ivy
   :bind (("C-s" . swiper)
@@ -196,15 +212,14 @@
 (progn ;    `isearch'
   (setq isearch-allow-scroll t))
 
-(use-package lisp-mode
-  :config
-  (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
-  (add-hook 'emacs-lisp-mode-hook 'reveal-mode)
-  (defun indent-spaces-mode ()
-    (setq indent-tabs-mode nil))
-  (add-hook 'lisp-interaction-mode-hook #'indent-spaces-mode))
+;; (use-package lisp-mode
+;;   :config
+;;   (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
+;;   (add-hook 'emacs-lisp-mode-hook 'reveal-mode)
+;;   (defun indent-spaces-mode ()
+;;     (setq indent-tabs-mode nil))
+;;   (add-hook 'lisp-interaction-mode-hook #'indent-spaces-mode))
 
-(global-set-key (kbd "M-m") nil)
 (use-package magit
   :defer t
   ;; :load-path ("site-lisp/magit/lisp")
