@@ -136,6 +136,8 @@
          ("C-h ."	. helpful-at-point)
          ("C-h v"	. helpful-variable)))
 
+(use-package hl-todo)
+
 (use-package ivy
   :demand t
   :diminish
@@ -464,7 +466,8 @@
             (horizontal-scroll-bars . nil)))
     (fset 'yes-or-no-p 'y-or-n-p)
     (set-frame-font my/emacs-font)
-    (setq indent-tabs-mode nil)))
+    (setq indent-tabs-mode nil)
+    (global-hl-todo-mode)))
 
 ;; Local Variables:
 ;; indent-tabs-mode: nil
