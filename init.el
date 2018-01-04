@@ -121,6 +121,9 @@
     (load custom-file)))
 
 (use-package elpy
+  :hook (python-mode . electric-pair-mode)
+  :bind (:map python-mode-map
+              ("M-RET Va" . pyvenv-activate))
   :config
   (elpy-enable)
   (elpy-use-ipython))
