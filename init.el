@@ -53,6 +53,7 @@
 (use-package diminish)
 
 (use-package general
+  :demand
   :load-path "site-lisp/general.el"
   :bind ("M-m"))
 
