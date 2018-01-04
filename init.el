@@ -139,7 +139,7 @@
 (use-package hl-todo)
 
 (use-package ivy
-  :demand t
+  :demand
   :diminish
 
   :custom
