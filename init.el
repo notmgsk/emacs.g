@@ -76,9 +76,9 @@
             'auto-compile-inhibit-compile-detached-git-head))
 
 (use-package ace-window
-  :after avy
   :general
-  ("M-m jw" #'ace-window))
+  ("M-m jw" #'ace-window)
+  ("M-m kw" #'ace-delete-window))
 
 (use-package avy
   :after ivy
