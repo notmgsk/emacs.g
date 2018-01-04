@@ -63,6 +63,9 @@
 [submodule "highlight-indentation"]
 	path = lib/highlight-indentation
 	url = git@github.com:antonj/Highlight-Indentation-for-Emacs.git
+[submodule "hl-todo"]
+	path = lib/hl-todo
+	url = git@github.com:tarsius/hl-todo.git
 [submodule "hydra"]
 	path = lib/hydra
 	url = git@github.com:abo-abo/hydra.git

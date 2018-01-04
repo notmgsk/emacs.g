@@ -3,3 +3,7 @@
 /custom.el
 /elpa
 /var
+*.elc
+*-autoloads.el
+dir
+*.info
