@@ -106,7 +106,7 @@
 	url = git@github.com:notmgsk/emacs.g.git
 [submodule "org"]
 	path = lib/org
-	url = git://orgmode.org/org-mode.git
+	url = https://code.orgmode.org/bzg/org-mode.git
 [submodule "packed"]
 	path = lib/packed
 	url = git@github.com:emacscollective/packed.git
