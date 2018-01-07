@@ -253,6 +253,8 @@
   :config (setq Man-width 80))
 
 (use-package org
+  ;; TODO Write a command that shows all my org files that I might
+  ;; want to get to quickly. Use ivy for completion.
   :bind (("C-c c" . org-capture))
   :bind (:map org-mode-map
 	      ("C-_" . undo)
