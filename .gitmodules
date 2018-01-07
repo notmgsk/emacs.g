@@ -104,6 +104,9 @@
 [submodule "multi-magit"]
 	path = lib/multi-magit
 	url = git@github.com:notmgsk/emacs.g.git
+[submodule "nav-flash"]
+	path = lib/nav-flash
+	url = git@github.com:rolandwalker/nav-flash.git
 [submodule "org"]
 	path = lib/org
 	url = git://orgmode.org/org-mode.git
