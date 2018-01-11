@@ -157,6 +157,11 @@
   (setq ivy-use-virtual-buffers t
 	ivy-count-format "%d/%d "))
 
+(use-package nav-flash
+  :after swiper
+  :config
+  (advice-add #'swiper :after #'nav-flash-show))
+
 (use-package server
   :config (or (server-running-p) (server-mode)))
 

@@ -7,6 +7,9 @@
 [submodule "auto-compile"]
 	path = lib/auto-compile
 	url = git@github.com:emacscollective/auto-compile.git
+[submodule "auto-dim-other-buffers"]
+	path = lib/auto-dim-other-buffers
+	url = https://github.com/mina86/auto-dim-other-buffers.el.git
 [submodule "avy"]
 	path = lib/avy
 	url = git@github.com:abo-abo/avy.git
@@ -104,6 +107,9 @@
 [submodule "multi-magit"]
 	path = lib/multi-magit
 	url = git@github.com:notmgsk/emacs.g.git
+[submodule "nav-flash"]
+	path = lib/nav-flash
+	url = git@github.com:rolandwalker/nav-flash.git
 [submodule "org"]
 	path = lib/org
 	url = https://code.orgmode.org/bzg/org-mode.git
