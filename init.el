@@ -191,7 +191,9 @@
               ("M-h" . swiper-avy)
               ("M-c" . swiper-mc))
   :bind (:map isearch-mode-map
-              ("C-." . swiper-from-isearch)))
+              ("C-." . swiper-from-isearch))
+  :config
+  (advice-add #'swiper :after #'nav-flash-show))
 
 (progn ;     startup
   (message "Loading early birds...done (%.3fs)"
@@ -368,6 +370,10 @@
   (setq mu4e-contexts (list my/mu4e-personal-context my/mu4e-uni-context))
   (setq mu4e-context-policy 'pick-first)
   (setq mu4e-compose-context-policy 'ask))
+
+(use-package nav-flash
+  :defer
+  :commands nav-flash-show)
 
 (use-package paren
   :config (show-paren-mode))
