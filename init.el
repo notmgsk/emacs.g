@@ -177,7 +177,7 @@
           inferior-lisp-program "sbcl"
           slime-complete-symbol*-fancy t
           slime-complete-symbol-function 'slime-fuzzy-complete-symbol
-          common-lisp-hyperspec-root "~/hyperspec/HyperSpec/"))
+          common-lisp-hyperspec-root "http://www.lispworks.com/reference/HyperSpec/"))
   :config
   (slime-setup))
 
@@ -256,7 +256,11 @@
   :config (setq Man-width 80))
 
 (use-package org
-  :bind (("C-c c" . org-capture))
+  :general
+  ("C-c c" #'org-capture)
+  ("M-m on" (lambda ()
+              (interactive)
+              (find-file org-default-notes-file)))
   :bind (:map org-mode-map
 	      ("C-_" . undo)
 	      ("<C-M-return>" . org-insert-item))
