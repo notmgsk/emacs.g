@@ -406,6 +406,10 @@
   (eldoc-add-command 'paredit-backward-delete
                      'paredit-close-round))
 
+(use-package pdf-tools
+  :config
+  (pdf-tools-install))
+
 (use-package prog-mode
   :config (global-prettify-symbols-mode)
   (defun indicate-buffer-boundaries-left ()
