@@ -258,6 +258,14 @@
   :commands (multi-magit-list-repositories
 	     multi-magit-status))
 
+(use-package multiple-cursors
+  :defer t
+  :general
+  ("C->" #'mc/mark-next-like-this)
+  ("C-<" #'mc/mark-previous-like-this)
+  ("C-c C->" #'mc/mark-all-like-this)
+  ("C-c (" #'mc/mark-all-in-region))
+
 (use-package man
   :defer t
   :config (setq Man-width 80))
