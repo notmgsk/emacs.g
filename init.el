@@ -162,6 +162,11 @@
   :config
   (advice-add #'swiper :after #'nav-flash-show))
 
+(use-package pdf-tools
+  :demand
+  :config
+  (pdf-tools-install))
+
 (use-package server
   :config (or (server-running-p) (server-mode)))
 
