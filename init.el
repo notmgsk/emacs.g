@@ -87,6 +87,8 @@
   :config
   (avy-setup-default))
 
+(use-package auctex)
+
 (use-package epkg
   :defer t
   :init (setq epkg-repository

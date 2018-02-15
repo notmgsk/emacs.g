@@ -4,6 +4,9 @@
 [submodule "ace-window"]
 	path = lib/ace-window
 	url = git@github.com:abo-abo/ace-window.git
+[submodule "auctex"]
+	path = lib/auctex
+	url = git@github.com:emacsmirror/auctex.git
 [submodule "auto-compile"]
 	path = lib/auto-compile
 	url = git@github.com:emacscollective/auto-compile.git
