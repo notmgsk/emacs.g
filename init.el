@@ -280,7 +280,17 @@
               (find-file org-default-notes-file)))
   :bind (:map org-mode-map
 	      ("C-_" . undo)
-	      ("<C-M-return>" . org-insert-item))
+	      ("<C-M-return>" . org-insert-item)
+              ("C-k" . my/org-kill-dwim))
+  :preface
+  (defun my/org-kill-dwim ()
+    (interactive)
+    (cond
+     ((and (outline-on-heading-p t)
+           (= (point) (org-entry-beginning-position)))
+      (org-cut-subtree))
+     (t
+      (org-kill-line))))
   :hook (org-mode . auto-fill-mode)
   :hook (org-mode . (lambda () (setq fill-column 80)))
   :config
@@ -322,6 +332,11 @@
                 :name "Uni unread/flagged"
                 :query "maildir:/uni flag:unread OR maildir:/uni flag:flagged"
                 :key ?s))
+  (add-to-list 'mu4e-bookmarks
+               (make-mu4e-bookmark
+                :name "Unread/flagged messages"
+                :query "flag:unread AND NOT flag:trashed OR flag:flagged"
+                :key ?u))
   ;; Stops shr using funky colours that make things unreadable.
   (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
   (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
@@ -496,7 +511,7 @@
             (horizontal-scroll-bars . nil)))
     (fset 'yes-or-no-p 'y-or-n-p)
     (set-frame-font my/emacs-font)
-    (setq indent-tabs-mode nil)
+    (setq-default indent-tabs-mode nil)
     (global-hl-todo-mode)))
 
 ;; Local Variables:
