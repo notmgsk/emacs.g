@@ -87,7 +87,7 @@
   :config
   (avy-setup-default))
 
-(use-package auctex)
+;; (use-package auctex)
 
 (use-package epkg
   :defer t
@@ -294,13 +294,25 @@
   :hook (org-mode . auto-fill-mode)
   :hook (org-mode . (lambda () (setq fill-column 80)))
   :config
+  (require 'org-mu4e)
   (setq org-directory "~/hackery/org")
   (setq org-default-notes-file (concat org-directory "/notes.org"))
   (setq org-capture-templates
-        '(("t" "Brief todo" entry (file+headline org-default-notes-file "Tasks")
-           "* TODO %?\n  %i\n")
-          ("T" "Todo" entry (file+headline org-default-notes-file "Tasks")
-           "* TODO %?\n %i\n %a"))))
+        `(("t" "todo" entry (file+headline ,org-default-notes-file "Tasks")
+           "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n"))
+        ;; '(("t" "Brief todo" entry (file+headline org-default-notes-file "Tasks")
+        ;;    "* TODO %?\n  %i\n")
+        ;;   ("T" "Todo" entry (file+headline org-default-notes-file "Tasks")
+        ;;    "* TODO %?\n %i\n %a"))
+        )
+  (defun compress-org-link (arg)
+    (interactive "P")
+    (let ((url (thing-at-point 'url))
+          (bounds (bounds-of-thing-at-point 'url)))
+      (kill-region (car bounds) (cdr bounds))
+      (insert (format "[[%s][%s]]"
+                      url
+                      (truncate-string-to-width url (if arg (prefix-numeric-value arg) fill-column) nil nil "..."))))))
 
 (use-package mu4e
   :defer t
@@ -326,12 +338,8 @@
         mu4e-html2text-command 'mu4e-shr2text
         shr-color-visible-luminance-min 60
         shr-color-visible-distance-min 5
+        shr-width 80
         )
-  (add-to-list 'mu4e-bookmarks
-               (make-mu4e-bookmark
-                :name "Uni unread/flagged"
-                :query "maildir:/uni flag:unread OR maildir:/uni flag:flagged"
-                :key ?s))
   (add-to-list 'mu4e-bookmarks
                (make-mu4e-bookmark
                 :name "Unread/flagged messages"
@@ -368,14 +376,14 @@
                  (mu4e-sent-folder . "/sent")
                  (user-mail-address . "ppyms3@exmail.nottingham.ac.uk")
                  (smtpmail-smtp-user . "ppyms3@ad.nottingham.ac.uk")
-                 (smtp-local-domain . "nottingham.ac.uk")
-                 (smtpmail-default-smtp-server . "smtp.nottingham.ac.uk")
-                 (smtpmail-smtp-server . "smtp.nottingham.ac.uk")
-                 (smtpmail-smtp-service . 25)
-                 ;; (smtp-local-domain . "office365.com")
-                 ;; (smtpmail-default-smtp-server . "smtp.office365.com")
-                 ;; (smtpmail-smtp-server . "smtp.office365.com")
-                 ;; (smtpmail-smtp-service . 587)
+                 ;; (smtp-local-domain . "nottingham.ac.uk")
+                 ;; (smtpmail-default-smtp-server . "smtp.nottingham.ac.uk")
+                 ;; (smtpmail-smtp-server . "smtp.nottingham.ac.uk")
+                 ;; (smtpmail-smtp-service . 25)
+                 (smtp-local-domain . "office365.com")
+                 (smtpmail-default-smtp-server . "smtp.office365.com")
+                 (smtpmail-smtp-server . "smtp.office365.com")
+                 (smtpmail-smtp-service . 587)
                  )))
 
   (setq my/mu4e-personal-context
@@ -461,7 +469,7 @@
 
 (use-package smart-mode-line
   :config
-  (setq sml/theme 'light)
+  (setq sml/theme 'dark)
   (sml/setup))
 
 (progn ;    `text-mode'
@@ -497,16 +505,24 @@
 (progn ;     personalize
   (let ((file (expand-file-name (concat (user-real-login-name) ".el")
                                 user-emacs-directory)))
+    (setq HOSTNAME (getenv "HOSTNAME"))
+    (message server-name)
+    (message HOSTNAME)
+
     (when (file-exists-p file)
       (load file))
 
-    (defconst my/emacs-font
-      "-pyrs-Roboto Mono-thin-normal-normal-*-18-*-*-*-*-0-iso10646-1")
+    (setq my/emacs-font
+      (if (and (equal HOSTNAME "earth")
+               (equal server-name "mail"))
+          "-CYEL-Iosevka Term-light-normal-normal-*-11-*-*-*-m-0-iso10646-1"
+        "-CYEL-Iosevka Term-light-normal-normal-*-22-*-*-*-m-0-iso10646-1"))
+
     ;; Should maybe use (when window-system ...) here.
     (tool-bar-mode -1)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
-    (load-theme 'leuven)
+    (load-theme 'solarized-dark t)
     (setq default-frame-alist
           `((font . ,my/emacs-font)
             (tool-bar-lines . 0)
@@ -516,7 +532,8 @@
     (fset 'yes-or-no-p 'y-or-n-p)
     (set-frame-font my/emacs-font)
     (setq-default indent-tabs-mode nil)
-    (global-hl-todo-mode)))
+    (global-hl-todo-mode)
+    (blink-cursor-mode t)))
 
 ;; Local Variables:
 ;; indent-tabs-mode: nil
