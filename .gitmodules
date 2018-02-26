@@ -35,6 +35,12 @@
 [submodule "diminish"]
 	path = lib/diminish
 	url = git@github.com:myrjola/diminish.el.git
+[submodule "dired-k"]
+	path = lib/dired-k
+	url = git@github.com:syohex/emacs-dired-k.git
+[submodule "direx"]
+	path = lib/direx
+	url = git@github.com:m2ym/direx-el.git
 [submodule "elisp-refs"]
 	path = lib/elisp-refs
 	url = git@github.com:Wilfred/refs.el.git
@@ -131,6 +137,9 @@
 [submodule "pyvenv"]
 	path = lib/pyvenv
 	url = git@github.com:jorgenschaefer/pyvenv.git
+[submodule "rainbow-mode"]
+	path = lib/rainbow-mode
+	url = git@github.com:emacsmirror/rainbow-mode.git
 [submodule "rich-minority"]
 	path = lib/rich-minority
 	url = git@github.com:Malabarba/rich-minority.git
@@ -149,6 +158,9 @@
 [submodule "smart-mode-line"]
 	path = lib/smart-mode-line
 	url = git@github.com:Malabarba/smart-mode-line.git
+[submodule "solarized-theme"]
+	path = lib/solarized-theme
+	url = git@github.com:bbatsov/solarized-emacs.git
 [submodule "swiper"]
 	path = lib/swiper
 	url = git@github.com:notmgsk/emacs.g.git
