@@ -398,6 +398,7 @@
          :vars '((user-mail-address . "markskilbeck@gmail.com")
                  (user-full-name . "Mark Skilbeck")
                  (mu4e-sent-folder . "/Personal/Sent Mail")
+                 (mu4e-drafts-folder . "/Personal/Drafts")
                  (smtpmail-smtp-user . "markskilbeck@gmail.com")
                  (smtp-local-domain . "gmail.com")
                  (smtpmail-default-smtp-server . "smtp.gmail.com")
