@@ -324,7 +324,7 @@
   (setq mu4e-completing-read-function 'completing-read)
   (setq mu4e-compose-dont-reply-to-self t)
   (setq mu4e-compose-signature-auto-include nil)
-  (setq mu4e-maildir "~/mail"
+  (setq mu4e-maildir "~/Mail"
         mu4e-trash-folder "/Trash"
         mu4e-refile-folder "/Archive"
         mu4e-get-mail-command "offlineimap"
@@ -333,8 +333,6 @@
         mu4e-view-show-images t
         mu4e-view-show-addresses t
         mu4e-view-prefer-html t
-        ;; mu4e-html2text-command "elinks -dump -dump-width 100"
-        ;; mu4e-html2text-command "html2markdown"
         mu4e-html2text-command 'mu4e-shr2text
         shr-color-visible-luminance-min 60
         shr-color-visible-distance-min 5
@@ -373,7 +371,8 @@
                                             "ppyms3@exmail.nottingham.ac.uk"))))
          :vars '((user-mail-address . "ppyms3@nottingham.ac.uk")
                  (user-full-name . "Mark Skilbeck")
-                 (mu4e-sent-folder . "/sent")
+                 (mu4e-sent-folder . "/Uni/Sent Items")
+                 (mu4e-drafts-folder . "/Uni/Drafts")
                  (user-mail-address . "ppyms3@exmail.nottingham.ac.uk")
                  (smtpmail-smtp-user . "ppyms3@ad.nottingham.ac.uk")
                  ;; (smtp-local-domain . "nottingham.ac.uk")
@@ -398,7 +397,7 @@
                           '(:to :cc :bcc) "markskilbeck@gmail.com")))
          :vars '((user-mail-address . "markskilbeck@gmail.com")
                  (user-full-name . "Mark Skilbeck")
-                 (mu4e-sent-folder . "/sent")
+                 (mu4e-sent-folder . "/Personal/Sent Mail")
                  (smtpmail-smtp-user . "markskilbeck@gmail.com")
                  (smtp-local-domain . "gmail.com")
                  (smtpmail-default-smtp-server . "smtp.gmail.com")
