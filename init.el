@@ -490,7 +490,11 @@
   :config
   (which-key-mode))
 
-(progn ;     startup
+(use-package expand-region)
+
+(use-package elfeed)
+
+(progn                                  ;     startup
   (message "Loading %s...done (%.3fs)" user-init-file
            (float-time (time-subtract (current-time)
                                       before-user-init-time)))
