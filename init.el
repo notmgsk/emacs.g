@@ -482,7 +482,7 @@
 
 (use-package smart-mode-line
   :config
-  (setq sml/theme 'dark)
+  (setq sml/theme 'respectful)
   (sml/setup))
 
 (progn ;    `text-mode'
