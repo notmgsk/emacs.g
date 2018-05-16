@@ -44,6 +44,9 @@
 [submodule "direx"]
 	path = lib/direx
 	url = git@github.com:m2ym/direx-el.git
+[submodule "elfeed"]
+	path = lib/elfeed
+	url = git@github.com:skeeto/elfeed.git
 [submodule "elisp-refs"]
 	path = lib/elisp-refs
 	url = git@github.com:Wilfred/refs.el.git
@@ -57,6 +60,9 @@
 [submodule "epkg"]
 	path = lib/epkg
 	url = git@github.com:emacscollective/epkg.git
+[submodule "expand-region"]
+	path = lib/expand-region
+	url = git@github.com:magnars/expand-region.el.git
 [submodule "f"]
 	path = lib/f
 	url = git@github.com:rejeep/f.el.git
