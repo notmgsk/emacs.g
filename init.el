@@ -503,6 +503,14 @@
   :config
   (which-key-mode))
 
+(use-package circe
+  :init
+  (setq circe-network-options
+        '(("Freenode"
+           :tls t
+           :nick "mgsk"
+           :channels ("#symbollox" "#bspwm")))))
+
 (progn ;     startup
   (message "Loading %s...done (%.3fs)" user-init-file
            (float-time (time-subtract (current-time)
