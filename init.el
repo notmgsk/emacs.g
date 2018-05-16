@@ -125,7 +125,8 @@
 (use-package elpy
   :hook (python-mode . electric-pair-mode)
   :bind (:map python-mode-map
-              ("M-RET Va" . pyvenv-activate))
+              ("M-RET Va" . pyvenv-activate)
+              ("C-M-e" . python-nav-end-of-defun))
   :config
   (elpy-enable)
   (elpy-use-ipython))
