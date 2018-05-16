@@ -7,3 +7,13 @@
 *-autoloads.el
 dir
 *.info
+*recentf*
+bookmarks
+*~
+history
+network-security.data
+url/
+places
+\#*
+.\#*
+.mc-lists.el
