@@ -223,6 +223,16 @@
   :defer t
   :config (setq dired-listing-switches "-alh"))
 
+(use-package dired-k
+  :init
+  (add-hook 'dired-initial-position-hook #'dired-k)
+  (add-hook 'dired-after-readin-hook #'dired-k-no-revert)
+  :config
+  (setq dired-k-style 'git)
+  (setq dired-k-human-readable t)
+  (setq dired-k-padding 1)
+  (setq-default dired-k-size-colors nil))
+
 (use-package eldoc
   :config (global-eldoc-mode))
 
