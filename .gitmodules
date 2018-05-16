@@ -19,6 +19,9 @@
 [submodule "borg"]
 	path = lib/borg
 	url = git@github.com:emacscollective/borg.git
+[submodule "circe"]
+	path = lib/circe
+	url = git@github.com:jorgenschaefer/circe.git
 [submodule "closql"]
 	path = lib/closql
 	url = git@github.com:emacscollective/closql.git
@@ -84,6 +87,9 @@
 [submodule "hyperspec"]
 	path = lib/hyperspec
 	url = git@github.com:emacsorphanage/hyperspec.git
+[submodule "image+"]
+	path = lib/image+
+	url = git@github.com:mhayashi1120/Emacs-imagex.git
 [submodule "ivy"]
 	path = lib/ivy
 	url = git@github.com:abo-abo/swiper.git
