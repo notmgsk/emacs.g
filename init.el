@@ -345,6 +345,8 @@
         mu4e-view-show-addresses t
         mu4e-view-prefer-html t
         mu4e-html2text-command 'mu4e-shr2text
+        mu4e-user-mail-address-list '("markskilbeck@gmail.com" "ppyms3@nottingham.ac.uk"
+                                      "ppyms3@exmail.nottingham.ac.uk")
         shr-color-visible-luminance-min 60
         shr-color-visible-distance-min 5
         shr-width 80
