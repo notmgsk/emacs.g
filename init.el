@@ -263,7 +263,8 @@
   (magit-add-section-hook 'magit-status-sections-hook
                           'magit-insert-modules
                           'magit-insert-stashes
-                          'append))
+                          'append)
+  (setq magit-diff-refine-hunk 'all))
 
 (use-package multi-magit
   ;; :load-path "site-lisp/multi-magit"
