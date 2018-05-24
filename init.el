@@ -525,6 +525,73 @@
                                           before-user-init-time))))
             t))
 
+(defun my/load-dark-theme ()
+  (interactive)
+  (load-theme/dracula))
+
+(defun my/load-light-theme ()
+  (interactive)
+  (load-theme/doom-solarized-light))
+
+;; TAKEN FROM https://github.com/kaushalmodi/.emacs.d/blob/e54b5b5b3943b8254a1315d9b9e69b8b9a259b29/setup-files/setup-visual.el#L29-L92
+;;                     THEME-NAME           DARK   FCI-RULE-COLOR
+(defconst my/themes '((solarized-dark       'dark  "gray40")
+                      (dracula              'dark  "gray40")
+                      (leuven               'light "gray")
+                      (solarized-light      'light "gray")
+                      (doom-solarized-light 'light "gray")
+                      (github-modern-theme  'light "gray")
+                      (default              'light "gray")) ; default emacs theme
+  "Alist of themes I tend to switch to frequently.")
+
+(defun my/disable-enabled-themes ()
+  "Disable all enable themes except the one used by `smart-mode-line'.
+This function is not meant for interactive use. A clean way to disable all
+themes will be to run `M-x load-theme/default' (this function is generated
+by the `modi/gen-all-theme-fns' macro. That will ensure that all
+themes are disabled and also fix the faces for linum, fringe, etc."
+  (dolist (theme custom-enabled-themes)
+    (unless (string-match "smart-mode-line-" (format "%s" theme))
+      (disable-theme theme))))
+
+;; How can I create multiple defuns by looping through a list?
+;; http://emacs.stackexchange.com/a/10122/115
+(defun modi/gen-theme-fn (theme-name dark fci-rule-color)
+  "Function to generate a function to disable all themes and enable the chosen
+theme, while also customizing few faces outside the theme.
+The theme loading functions are named “load-theme/THEME-NAME”.
+Example: For `smyx' theme, the generated function will be `load-theme/smyx'.
+The DARK variable should be set to `'dark' if the theme is dark and `'light'
+if otherwise.
+The FCI-RULE-COLOR is the color string to set the color for fci rules."
+  (let ((theme-fn-name (intern (format "load-theme/%s" theme-name))))
+    `(defun ,theme-fn-name ()
+       (interactive)
+       ;; `dark-theme' is set to `t' if `dark' value is `'dark'
+       (setq dark-theme (equal ,dark 'dark))
+       (my/disable-enabled-themes)
+       (when (not (equal ',theme-name 'default))
+         (load-theme ',theme-name t))
+       (when (featurep 'defuns)
+         (modi/blend-fringe))
+       (when (featurep 'setup-linum)
+         (modi/blend-linum))
+       (when (featurep 'smart-mode-line)
+         (sml/apply-theme 'respectful nil :silent)) ; apply sml theme silently
+       (when (featurep 'fill-column-indicator)
+         ;; Below commented code does not work
+         ;; (setq fci-rule-color (face-foreground 'font-lock-comment-face))
+         (setq fci-rule-color ,fci-rule-color)
+         (modi/fci-redraw-frame-all-buffers)))))
+
+(defmacro modi/gen-all-theme-fns ()
+  `(progn ,@(mapcar
+             (lambda (x) (modi/gen-theme-fn (nth 0 x) (nth 1 x) (nth 2 x)))
+             my/themes)))
+
+(modi/gen-all-theme-fns)
+;; (pp (macroexpand '(modi/gen-all-theme-fns))) ; for debug
+
 (progn ;     personalize
   (let ((file (expand-file-name (concat (user-real-login-name) ".el")
                                 user-emacs-directory)))
@@ -539,7 +606,7 @@
       (if (and (equal HOSTNAME "earth")
                (equal server-name "mail"))
           "-CYEL-Iosevka Term-light-normal-normal-*-11-*-*-*-m-0-iso10646-1"
-        "-CYEL-Iosevka Term-light-normal-normal-*-22-*-*-*-m-0-iso10646-1"))
+        "-pyrs-Roboto Mono-normal-normal-normal-*-19-*-*-*-*-0-iso10646-1"))
 
     ;; Should maybe use (when window-system ...) here.
     (tool-bar-mode -1)
