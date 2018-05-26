@@ -50,6 +50,12 @@
 [submodule "direx"]
 	path = lib/direx
 	url = git@github.com:m2ym/direx-el.git
+[submodule "doom-themes"]
+	path = lib/doom-themes
+	url = git@github.com:hlissner/emacs-doom-themes.git
+[submodule "dracula-theme"]
+	path = lib/dracula-theme
+	url = git@github.com:dracula/emacs.git
 [submodule "elfeed"]
 	path = lib/elfeed
 	url = git@github.com:skeeto/elfeed.git
@@ -90,6 +96,9 @@
 [submodule "git-modes"]
 	path = lib/git-modes
 	url = git@github.com:magit/git-modes.git
+[submodule "github-modern-theme"]
+	path = lib/github-modern-theme
+	url = git@github.com:philiparvidsson/GitHub-Modern-Theme-For-Emacs.git
 [submodule "helpful"]
 	path = lib/helpful
 	url = git@github.com:Wilfred/helpful.git
@@ -108,6 +117,9 @@
 [submodule "hyperspec"]
 	path = lib/hyperspec
 	url = git@github.com:emacsorphanage/hyperspec.git
+[submodule "image+"]
+	path = lib/image+
+	url = git@github.com:mhayashi1120/Emacs-imagex.git
 [submodule "ivy"]
 	path = lib/ivy
 	url = git@github.com:abo-abo/swiper.git

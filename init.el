@@ -125,7 +125,8 @@
 (use-package elpy
   :hook (python-mode . electric-pair-mode)
   :bind (:map python-mode-map
-              ("M-RET Va" . pyvenv-activate))
+              ("M-RET Va" . pyvenv-activate)
+              ("C-M-e" . python-nav-end-of-defun))
   :config
   (elpy-enable)
   (elpy-use-ipython))
@@ -222,6 +223,16 @@
   :defer t
   :config (setq dired-listing-switches "-alh"))
 
+(use-package dired-k
+  :init
+  (add-hook 'dired-initial-position-hook #'dired-k)
+  (add-hook 'dired-after-readin-hook #'dired-k-no-revert)
+  :config
+  (setq dired-k-style 'git)
+  (setq dired-k-human-readable t)
+  (setq dired-k-padding 1)
+  (setq-default dired-k-size-colors nil))
+
 (use-package eldoc
   :config (global-eldoc-mode))
 
@@ -252,7 +263,8 @@
   (magit-add-section-hook 'magit-status-sections-hook
                           'magit-insert-modules
                           'magit-insert-stashes
-                          'append))
+                          'append)
+  (setq magit-diff-refine-hunk 'all))
 
 (use-package multi-magit
   ;; :load-path "site-lisp/multi-magit"
@@ -327,13 +339,15 @@
   (setq mu4e-maildir "~/Mail"
         mu4e-trash-folder "/Trash"
         mu4e-refile-folder "/Archive"
-        mu4e-get-mail-command "true"
+        mu4e-get-mail-command "offlineimap"
         mu4e-update-interval 300
         mu4e-compose-signature-auto-include nil
         mu4e-view-show-images t
         mu4e-view-show-addresses t
         mu4e-view-prefer-html t
         mu4e-html2text-command 'mu4e-shr2text
+        mu4e-user-mail-address-list '("markskilbeck@gmail.com" "ppyms3@nottingham.ac.uk"
+                                      "ppyms3@exmail.nottingham.ac.uk")
         shr-color-visible-luminance-min 60
         shr-color-visible-distance-min 5
         shr-width 80
@@ -469,7 +483,7 @@
 
 (use-package smart-mode-line
   :config
-  (setq sml/theme 'dark)
+  (setq sml/theme 'respectful)
   (sml/setup))
 
 (progn ;    `text-mode'
@@ -490,11 +504,16 @@
   :config
   (which-key-mode))
 
+(use-package circe
+  :init
+  (setq circe-network-options
+        '(("Freenode"
+           :tls t
+           :nick "mgsk"
+           :channels ("#symbollox" "#bspwm")))))
 (use-package expand-region)
 
-(use-package elfeed)
-
-(progn                                  ;     startup
+(progn ;     startup
   (message "Loading %s...done (%.3fs)" user-init-file
            (float-time (time-subtract (current-time)
                                       before-user-init-time)))
@@ -505,6 +524,73 @@
                (float-time (time-subtract (current-time)
                                           before-user-init-time))))
             t))
+
+(defun my/load-dark-theme ()
+  (interactive)
+  (load-theme/dracula))
+
+(defun my/load-light-theme ()
+  (interactive)
+  (load-theme/doom-solarized-light))
+
+;; TAKEN FROM https://github.com/kaushalmodi/.emacs.d/blob/e54b5b5b3943b8254a1315d9b9e69b8b9a259b29/setup-files/setup-visual.el#L29-L92
+;;                     THEME-NAME           DARK   FCI-RULE-COLOR
+(defconst my/themes '((solarized-dark       'dark  "gray40")
+                      (dracula              'dark  "gray40")
+                      (leuven               'light "gray")
+                      (solarized-light      'light "gray")
+                      (doom-solarized-light 'light "gray")
+                      (github-modern-theme  'light "gray")
+                      (default              'light "gray")) ; default emacs theme
+  "Alist of themes I tend to switch to frequently.")
+
+(defun my/disable-enabled-themes ()
+  "Disable all enable themes except the one used by `smart-mode-line'.
+This function is not meant for interactive use. A clean way to disable all
+themes will be to run `M-x load-theme/default' (this function is generated
+by the `modi/gen-all-theme-fns' macro. That will ensure that all
+themes are disabled and also fix the faces for linum, fringe, etc."
+  (dolist (theme custom-enabled-themes)
+    (unless (string-match "smart-mode-line-" (format "%s" theme))
+      (disable-theme theme))))
+
+;; How can I create multiple defuns by looping through a list?
+;; http://emacs.stackexchange.com/a/10122/115
+(defun modi/gen-theme-fn (theme-name dark fci-rule-color)
+  "Function to generate a function to disable all themes and enable the chosen
+theme, while also customizing few faces outside the theme.
+The theme loading functions are named “load-theme/THEME-NAME”.
+Example: For `smyx' theme, the generated function will be `load-theme/smyx'.
+The DARK variable should be set to `'dark' if the theme is dark and `'light'
+if otherwise.
+The FCI-RULE-COLOR is the color string to set the color for fci rules."
+  (let ((theme-fn-name (intern (format "load-theme/%s" theme-name))))
+    `(defun ,theme-fn-name ()
+       (interactive)
+       ;; `dark-theme' is set to `t' if `dark' value is `'dark'
+       (setq dark-theme (equal ,dark 'dark))
+       (my/disable-enabled-themes)
+       (when (not (equal ',theme-name 'default))
+         (load-theme ',theme-name t))
+       (when (featurep 'defuns)
+         (modi/blend-fringe))
+       (when (featurep 'setup-linum)
+         (modi/blend-linum))
+       (when (featurep 'smart-mode-line)
+         (sml/apply-theme 'respectful nil :silent)) ; apply sml theme silently
+       (when (featurep 'fill-column-indicator)
+         ;; Below commented code does not work
+         ;; (setq fci-rule-color (face-foreground 'font-lock-comment-face))
+         (setq fci-rule-color ,fci-rule-color)
+         (modi/fci-redraw-frame-all-buffers)))))
+
+(defmacro modi/gen-all-theme-fns ()
+  `(progn ,@(mapcar
+             (lambda (x) (modi/gen-theme-fn (nth 0 x) (nth 1 x) (nth 2 x)))
+             my/themes)))
+
+(modi/gen-all-theme-fns)
+;; (pp (macroexpand '(modi/gen-all-theme-fns))) ; for debug
 
 (progn ;     personalize
   (let ((file (expand-file-name (concat (user-real-login-name) ".el")
@@ -520,7 +606,7 @@
       (if (and (equal HOSTNAME "earth")
                (equal server-name "mail"))
           "-CYEL-Iosevka Term-light-normal-normal-*-11-*-*-*-m-0-iso10646-1"
-        "-CYEL-Iosevka Term-light-normal-normal-*-22-*-*-*-m-0-iso10646-1"))
+        "-pyrs-Roboto Mono-normal-normal-normal-*-19-*-*-*-*-0-iso10646-1"))
 
     ;; Should maybe use (when window-system ...) here.
     (tool-bar-mode -1)

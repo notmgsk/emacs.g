@@ -7,8 +7,8 @@
 *-autoloads.el
 dir
 *.info
-
-# -*- mode: gitignore; -*-
+*recentf*
+bookmarks
 *~
 \#*\#
 /.emacs.desktop
@@ -59,4 +59,5 @@ flycheck_*.el
 bookmarks
 history
 network-security.data
+url/
 places
