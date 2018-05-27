@@ -294,6 +294,8 @@
 	      ("C-_" . undo)
 	      ("<C-M-return>" . org-insert-item)
               ("C-k" . my/org-kill-dwim))
+  :bind (("C-c C-x C-i" . org-mode-clock-clock-in)
+         ("C-c C-x C-o" . org-mode-clock-clock-out))
   :preface
   (defun my/org-kill-dwim ()
     (interactive)
@@ -513,17 +515,23 @@
            :channels ("#symbollox" "#bspwm")))))
 (use-package expand-region)
 
-(progn ;     startup
-  (message "Loading %s...done (%.3fs)" user-init-file
-           (float-time (time-subtract (current-time)
-                                      before-user-init-time)))
-  (add-hook 'after-init-hook
-            (lambda ()
-              (message
-               "Loading %s...done (%.3fs) [after-init]" user-init-file
-               (float-time (time-subtract (current-time)
-                                          before-user-init-time))))
-            t))
+(use-package url
+  :demand t
+  :config
+  (defun my/url-get-title (url)
+    (interactive "sURL: ")
+    (with-current-buffer (url-retrieve-synchronously url)
+      (or (search-forward "\n\n" nil t)
+          (search-forward "\r\n\r\n" nil t))
+      (let ((cp (point))
+            (ep (point-max)))
+        (set-mark cp)
+        (push-mark ep)
+        (let* ((aslist (cddr (libxml-parse-html-region cp ep)))
+               (headers (cdr (assoc 'head aslist)))
+               (title (caddr (assoc 'title headers))))
+          (message title)
+          title)))))
 
 (defun my/load-theme (variant)
   (interactive
