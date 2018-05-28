@@ -545,7 +545,7 @@
 
 (defun my/load-dark-theme ()
   (interactive)
-  (load-theme/dracula))
+  (load-theme/doom-dracula))
 
 (defun my/load-light-theme ()
   (interactive)
@@ -555,6 +555,7 @@
 ;;                     THEME-NAME           DARK   FCI-RULE-COLOR
 (defconst my/themes '((solarized-dark       'dark  "gray40")
                       (dracula              'dark  "gray40")
+                      (doom-dracula         'dark "gray40")
                       (leuven               'light "gray")
                       (solarized-light      'light "gray")
                       (doom-solarized-light 'light "gray")
