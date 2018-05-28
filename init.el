@@ -659,7 +659,7 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
     (tool-bar-mode -1)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
-    (load-theme 'solarized-dark t)
+    (my/load-dark-theme)
     (setq default-frame-alist
           `((font . ,my/emacs-font)
             (tool-bar-lines . 0)
