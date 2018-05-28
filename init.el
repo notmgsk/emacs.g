@@ -649,10 +649,11 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
       (load file))
 
     (setq my/emacs-font
-      (if (and (equal HOSTNAME "earth")
-               (equal server-name "mail"))
-          "-CYEL-Iosevka Term-light-normal-normal-*-11-*-*-*-m-0-iso10646-1"
-        "-pyrs-Roboto Mono-normal-normal-normal-*-19-*-*-*-*-0-iso10646-1"))
+          ;; (if (and (equal HOSTNAME "earth")
+          ;;          (equal server-name "mail"))
+          ;;     "-CYEL-Iosevka Term-light-normal-normal-*-11-*-*-*-m-0-iso10646-1"
+          ;;   "-pyrs-Roboto Mono-normal-normal-normal-*-19-*-*-*-*-0-iso10646-1")
+          "-pyrs-Roboto Mono-normal-normal-normal-*-19-*-*-*-*-0-iso10646-1")
 
     ;; Should maybe use (when window-system ...) here.
     (tool-bar-mode -1)
