@@ -670,7 +670,10 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
     (set-frame-font my/emacs-font)
     (setq-default indent-tabs-mode nil)
     (global-hl-todo-mode)
-    (blink-cursor-mode t)))
+    (global-hl-line-mode)
+    (blink-cursor-mode t)
+    (setq split-width-threshold 120)
+    (setq split-height-threshold 200)))
 
 ;; Local Variables:
 ;; indent-tabs-mode: nil
