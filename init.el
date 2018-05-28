@@ -600,7 +600,45 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
 (modi/gen-all-theme-fns)
 ;; (pp (macroexpand '(modi/gen-all-theme-fns))) ; for debug
 
-(progn ;     personalize
+(defun my/lighten-color (color percent)
+  ;; See https://stackoverflow.com/q/5560248
+  ;; TODO Tidy this up
+  (let* ((num (string-to-number (string-remove-prefix "#" color) 16))
+         (amount (round (* 2.55 percent)))
+         (R (+ (ash num -16) amount))
+         (G (+ (logand (ash num -8) #x00FF) amount))
+         (B (+ (logand num #x0000FF) amount)))
+    (let ((num (+ #x1000000
+                  (* (if (< R 255)
+                         (if (< R 1)
+                             0
+                           R)
+                       255)
+                     #x10000)
+                  (* (if (< G 255)
+                         (if (< G 1)
+                             0
+                           G)
+                       255)
+                     #x100)
+                  (if (< G 255)
+                      (if (< G 1)
+                          0
+                        G)
+                    255))))
+      (format "#%06x" (logand num #xFFFFFF)))))
+
+(use-package auto-dim-other-buffers
+  :init
+  (add-hook 'auto-dim-other-buffers-mode-hook
+            (lambda ()
+              (let* ((current-bg (face-attribute 'default :background))
+                     (new-bg (my/lighten-color current-bg -1)))
+                (custom-set-faces `(auto-dim-other-buffers-face ((t (:background ,new-bg)))))))))
+
+(setq auto-dim-other-buffers-mode-hook nil)
+
+(progn                                  ;     personalize
   (let ((file (expand-file-name (concat (user-real-login-name) ".el")
                                 user-emacs-directory)))
     (setq HOSTNAME (getenv "HOSTNAME"))
