@@ -233,6 +233,11 @@
   (setq dired-k-padding 1)
   (setq-default dired-k-size-colors nil))
 
+(use-package dired-narrow
+  :after dired
+  :bind (:map dired-mode-map
+              ("/" . dired-narrow)))
+
 (use-package eldoc
   :config (global-eldoc-mode))
 
@@ -533,9 +538,21 @@
           (message title)
           title)))))
 
+(use-package git-link)
+
+(defun my/load-theme (variant)
+  (interactive
+   (list (completing-read "Theme variant: "
+                          '("dark" "light"))))
+  (cond
+   ((string-equal variant "dark")
+    (my/load-dark-theme))
+   ((string-equal variant "light")
+    (my/load-light-theme))))
+
 (defun my/load-dark-theme ()
   (interactive)
-  (load-theme/dracula))
+  (load-theme/doom-dracula))
 
 (defun my/load-light-theme ()
   (interactive)
@@ -545,6 +562,7 @@
 ;;                     THEME-NAME           DARK   FCI-RULE-COLOR
 (defconst my/themes '((solarized-dark       'dark  "gray40")
                       (dracula              'dark  "gray40")
+                      (doom-dracula         'dark "gray40")
                       (leuven               'light "gray")
                       (solarized-light      'light "gray")
                       (doom-solarized-light 'light "gray")
@@ -585,7 +603,7 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
        (when (featurep 'setup-linum)
          (modi/blend-linum))
        (when (featurep 'smart-mode-line)
-         (sml/apply-theme 'respectful nil :silent)) ; apply sml theme silently
+         (sml/apply-theme ,dark nil :silent)) ; apply sml theme silently
        (when (featurep 'fill-column-indicator)
          ;; Below commented code does not work
          ;; (setq fci-rule-color (face-foreground 'font-lock-comment-face))

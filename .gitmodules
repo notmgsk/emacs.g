@@ -44,6 +44,9 @@
 [submodule "diminish"]
 	path = lib/diminish
 	url = git@github.com:myrjola/diminish.el.git
+[submodule "dired-hacks"]
+	path = lib/dired-hacks
+	url = git@github.com:Fuco1/dired-hacks.git
 [submodule "dired-k"]
 	path = lib/dired-k
 	url = git@github.com:syohex/emacs-dired-k.git
@@ -56,6 +59,9 @@
 [submodule "dracula-theme"]
 	path = lib/dracula-theme
 	url = git@github.com:dracula/emacs.git
+[submodule "eimp"]
+	path = lib/eimp
+	url = git@github.com:nicferrier/eimp.git
 [submodule "elfeed"]
 	path = lib/elfeed
 	url = git@github.com:skeeto/elfeed.git
@@ -93,6 +99,9 @@
 [submodule "ghub"]
 	path = lib/ghub
 	url = git@github.com:tarsius/ghub.git
+[submodule "git-link"]
+	path = lib/git-link
+	url = git@github.com:sshaw/git-link.git
 [submodule "git-modes"]
 	path = lib/git-modes
 	url = git@github.com:magit/git-modes.git
