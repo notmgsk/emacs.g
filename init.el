@@ -233,6 +233,11 @@
   (setq dired-k-padding 1)
   (setq-default dired-k-size-colors nil))
 
+(use-package dired-narrow
+  :after dired
+  :bind (:map dired-mode-map
+              ("/" . dired-narrow)))
+
 (use-package eldoc
   :config (global-eldoc-mode))
 
@@ -532,6 +537,8 @@
                (title (caddr (assoc 'title headers))))
           (message title)
           title)))))
+
+(use-package git-link)
 
 (defun my/load-theme (variant)
   (interactive
