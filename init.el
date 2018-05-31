@@ -50,6 +50,8 @@
           ("C-. m" . my-ctrl-dot-m-map)
           ("C-. r" . my-ctrl-dot-r-map))))
 
+(use-package tex)
+
 (use-package diminish)
 
 (use-package general
