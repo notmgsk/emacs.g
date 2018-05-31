@@ -620,7 +620,45 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
 (modi/gen-all-theme-fns)
 ;; (pp (macroexpand '(modi/gen-all-theme-fns))) ; for debug
 
-(progn ;     personalize
+(defun my/lighten-color (color percent)
+  ;; See https://stackoverflow.com/q/5560248
+  ;; TODO Tidy this up
+  (let* ((num (string-to-number (string-remove-prefix "#" color) 16))
+         (amount (round (* 2.55 percent)))
+         (R (+ (ash num -16) amount))
+         (G (+ (logand (ash num -8) #x00FF) amount))
+         (B (+ (logand num #x0000FF) amount)))
+    (let ((num (+ #x1000000
+                  (* (if (< R 255)
+                         (if (< R 1)
+                             0
+                           R)
+                       255)
+                     #x10000)
+                  (* (if (< G 255)
+                         (if (< G 1)
+                             0
+                           G)
+                       255)
+                     #x100)
+                  (if (< G 255)
+                      (if (< G 1)
+                          0
+                        G)
+                    255))))
+      (format "#%06x" (logand num #xFFFFFF)))))
+
+(use-package auto-dim-other-buffers
+  :init
+  (add-hook 'auto-dim-other-buffers-mode-hook
+            (lambda ()
+              (let* ((current-bg (face-attribute 'default :background))
+                     (new-bg (my/lighten-color current-bg -1)))
+                (custom-set-faces `(auto-dim-other-buffers-face ((t (:background ,new-bg)))))))))
+
+(setq auto-dim-other-buffers-mode-hook nil)
+
+(progn                                  ;     personalize
   (let ((file (expand-file-name (concat (user-real-login-name) ".el")
                                 user-emacs-directory)))
     (setq HOSTNAME (getenv "HOSTNAME"))
@@ -631,16 +669,17 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
       (load file))
 
     (setq my/emacs-font
-      (if (and (equal HOSTNAME "earth")
-               (equal server-name "mail"))
-          "-CYEL-Iosevka Term-light-normal-normal-*-11-*-*-*-m-0-iso10646-1"
-        "-pyrs-Roboto Mono-normal-normal-normal-*-19-*-*-*-*-0-iso10646-1"))
+          ;; (if (and (equal HOSTNAME "earth")
+          ;;          (equal server-name "mail"))
+          ;;     "-CYEL-Iosevka Term-light-normal-normal-*-11-*-*-*-m-0-iso10646-1"
+          ;;   "-pyrs-Roboto Mono-normal-normal-normal-*-19-*-*-*-*-0-iso10646-1")
+          "-pyrs-Roboto Mono-normal-normal-normal-*-19-*-*-*-*-0-iso10646-1")
 
     ;; Should maybe use (when window-system ...) here.
     (tool-bar-mode -1)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
-    (load-theme 'solarized-dark t)
+    (my/load-dark-theme)
     (setq default-frame-alist
           `((font . ,my/emacs-font)
             (tool-bar-lines . 0)
@@ -651,7 +690,10 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
     (set-frame-font my/emacs-font)
     (setq-default indent-tabs-mode nil)
     (global-hl-todo-mode)
-    (blink-cursor-mode t)))
+    (global-hl-line-mode)
+    (blink-cursor-mode t)
+    (setq split-width-threshold 120)
+    (setq split-height-threshold 200)))
 
 ;; Local Variables:
 ;; indent-tabs-mode: nil
