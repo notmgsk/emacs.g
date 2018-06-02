@@ -528,6 +528,7 @@
   (defun my/url-get-title (url)
     (interactive "sURL: ")
     (with-current-buffer (url-retrieve-synchronously url)
+      (goto-char (point-min))
       (or (search-forward "\n\n" nil t)
           (search-forward "\r\n\r\n" nil t))
       (let ((cp (point))
@@ -537,7 +538,6 @@
         (let* ((aslist (cddr (libxml-parse-html-region cp ep)))
                (headers (cdr (assoc 'head aslist)))
                (title (caddr (assoc 'title headers))))
-          (message title)
           title)))))
 
 (use-package git-link)
