@@ -47,6 +47,11 @@
           ("C-. m" . my-ctrl-dot-m-map)
           ("C-. r" . my-ctrl-dot-r-map))))
 
+(use-package exec-path-from-shell
+  :demand
+  :config
+  (exec-path-from-shell-initialize))
+
 (use-package tex)
 
 (use-package diminish)
