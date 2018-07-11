@@ -675,12 +675,9 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
           ;;          (equal server-name "mail"))
           ;;     "-CYEL-Iosevka Term-light-normal-normal-*-11-*-*-*-m-0-iso10646-1"
           ;;   "-pyrs-Roboto Mono-normal-normal-normal-*-19-*-*-*-*-0-iso10646-1")
-          "-pyrs-Roboto Mono-normal-normal-normal-*-19-*-*-*-*-0-iso10646-1")
+          "-pyrs-Roboto Mono-normal-normal-normal-*-12-*-*-*-*-0-iso10646-1")
+    (set-frame-font my/emacs-font)
 
-    ;; Should maybe use (when window-system ...) here.
-    (tool-bar-mode -1)
-    (menu-bar-mode -1)
-    (scroll-bar-mode -1)
     (my/load-dark-theme)
     (setq default-frame-alist
           `((font . ,my/emacs-font)
