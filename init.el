@@ -317,7 +317,7 @@
   :hook (org-mode . auto-fill-mode)
   :hook (org-mode . (lambda () (setq fill-column 80)))
   :config
-  (require 'org-mu4e)
+  ;; (require 'org-mu4e)
   (setq org-directory "~/hackery/org")
   (setq org-default-notes-file (concat org-directory "/notes.org"))
   (setq org-capture-templates
