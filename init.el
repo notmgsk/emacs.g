@@ -689,13 +689,23 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
             (vertical-scroll-bars . nil)
             (horizontal-scroll-bars . nil)))
     (fset 'yes-or-no-p 'y-or-n-p)
-    (set-frame-font my/emacs-font)
     (setq-default indent-tabs-mode nil)
     (global-hl-todo-mode)
     (global-hl-line-mode)
     (blink-cursor-mode t)
     (setq split-width-threshold 120)
-    (setq split-height-threshold 200)))
+    (setq split-height-threshold 200)
+
+    (when (eq system-type 'darwin) ;; mac specific settings
+      (setq mac-option-modifier 'nil)
+      (setq mac-command-modifier 'meta)
+      (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
+
+      (setq powerline-default-separator 'box)))
+
+  (global-display-line-numbers-mode)
+  (setq-default truncate-lines t)
+  (setq auto-hscroll-mode 'current-line))
 
 ;; Local Variables:
 ;; indent-tabs-mode: nil
