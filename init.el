@@ -698,7 +698,9 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
       (setq mac-command-modifier 'meta)
       (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
 
-      (setq powerline-default-separator 'box)))
+      (setq powerline-default-separator 'box)
+      ;; Stop that ugly bell noise on macos. DUN. DUN. DUN. STFU.
+      (setq ring-bell-function 'ignore)))
 
   (global-display-line-numbers-mode)
   (setq-default truncate-lines t)
