@@ -4,150 +4,198 @@
 [submodule "ace-window"]
 	path = lib/ace-window
 	url = git@github.com:abo-abo/ace-window.git
+	ignore = dirty
 [submodule "alert"]
 	path = lib/alert
 	url = git@github.com:jwiegley/alert.git
+	ignore = dirty
 [submodule "auctex"]
 	path = lib/auctex
 	url = git@github.com:emacsmirror/auctex.git
+	ignore = dirty
 [submodule "auto-compile"]
 	path = lib/auto-compile
 	url = git@github.com:emacscollective/auto-compile.git
+	ignore = dirty
 [submodule "auto-dim-other-buffers"]
 	path = lib/auto-dim-other-buffers
 	url = https://github.com/mina86/auto-dim-other-buffers.el.git
+	ignore = dirty
 [submodule "avy"]
 	path = lib/avy
 	url = git@github.com:abo-abo/avy.git
+	ignore = dirty
 [submodule "borg"]
 	path = lib/borg
 	url = git@github.com:emacscollective/borg.git
+	ignore = dirty
 [submodule "circe"]
 	path = lib/circe
 	url = git@github.com:jorgenschaefer/circe.git
+	ignore = dirty
 [submodule "closql"]
 	path = lib/closql
 	url = git@github.com:emacscollective/closql.git
+	ignore = dirty
 [submodule "company"]
 	path = lib/company
 	url = git@github.com:company-mode/company-mode.git
+	ignore = dirty
 [submodule "dash"]
 	path = lib/dash
 	url = git@github.com:magnars/dash.el.git
 	no-makeinfo = dash-template.texi
+	ignore = dirty
 [submodule "deferred"]
 	path = lib/deferred
 	url = git@github.com:kiwanami/emacs-deferred.git
+	ignore = dirty
 [submodule "diff-hl"]
 	path = lib/diff-hl
 	url = git@github.com:dgutov/diff-hl.git
+	ignore = dirty
 [submodule "diminish"]
 	path = lib/diminish
 	url = git@github.com:myrjola/diminish.el.git
+	ignore = dirty
 [submodule "dired-hacks"]
 	path = lib/dired-hacks
 	url = git@github.com:Fuco1/dired-hacks.git
+	ignore = dirty
 [submodule "dired-k"]
 	path = lib/dired-k
 	url = git@github.com:syohex/emacs-dired-k.git
+	ignore = dirty
 [submodule "direx"]
 	path = lib/direx
 	url = git@github.com:m2ym/direx-el.git
+	ignore = dirty
 [submodule "doom-themes"]
 	path = lib/doom-themes
 	url = git@github.com:hlissner/emacs-doom-themes.git
+	ignore = dirty
 [submodule "dracula-theme"]
 	path = lib/dracula-theme
 	url = git@github.com:dracula/emacs.git
+	ignore = dirty
 [submodule "eimp"]
 	path = lib/eimp
 	url = git@github.com:nicferrier/eimp.git
+	ignore = dirty
 [submodule "elfeed"]
 	path = lib/elfeed
 	url = git@github.com:skeeto/elfeed.git
+	ignore = dirty
 [submodule "elisp-refs"]
 	path = lib/elisp-refs
 	url = git@github.com:Wilfred/refs.el.git
+	ignore = dirty
 [submodule "elpy"]
 	path = lib/elpy
 	url = git@github.com:jorgenschaefer/elpy.git
+	ignore = dirty
 [submodule "emacsql"]
 	path = lib/emacsql
 	url = git@github.com:skeeto/emacsql.git
 	no-byte-compile = emacsql-pg.el
+	ignore = dirty
 [submodule "emojify"]
 	path = lib/emojify
 	url = git@github.com:iqbalansari/emacs-emojify.git
+	ignore = dirty
 [submodule "epkg"]
 	path = lib/epkg
 	url = git@github.com:emacscollective/epkg.git
+	ignore = dirty
 [submodule "ess"]
 	path = lib/ess
 	url = git@github.com:emacs-ess/ESS.git
+	ignore = dirty
 [submodule "exec-path-from-shell"]
 	path = lib/exec-path-from-shell
 	url = git@github.com:purcell/exec-path-from-shell.git
+	ignore = dirty
 [submodule "expand-region"]
 	path = lib/expand-region
 	url = git@github.com:magnars/expand-region.el.git
+	ignore = dirty
 [submodule "f"]
 	path = lib/f
 	url = git@github.com:rejeep/f.el.git
+	ignore = dirty
 [submodule "find-file-in-project"]
 	path = lib/find-file-in-project
 	url = git@github.com:technomancy/find-file-in-project.git
+	ignore = dirty
 [submodule "general"]
 	path = lib/general
 	url = git@github.com:noctuid/general.el.git
+	ignore = dirty
 [submodule "ghub"]
 	path = lib/ghub
 	url = git@github.com:tarsius/ghub.git
+	ignore = dirty
 [submodule "git-link"]
 	path = lib/git-link
 	url = git@github.com:sshaw/git-link.git
+	ignore = dirty
 [submodule "git-modes"]
 	path = lib/git-modes
 	url = git@github.com:magit/git-modes.git
+	ignore = dirty
 [submodule "github-modern-theme"]
 	path = lib/github-modern-theme
 	url = git@github.com:philiparvidsson/GitHub-Modern-Theme-For-Emacs.git
+	ignore = dirty
 [submodule "helpful"]
 	path = lib/helpful
 	url = git@github.com:Wilfred/helpful.git
+	ignore = dirty
 [submodule "highlight-indentation"]
 	path = lib/highlight-indentation
 	url = git@github.com:antonj/Highlight-Indentation-for-Emacs.git
+	ignore = dirty
 [submodule "hl-todo"]
 	path = lib/hl-todo
 	url = git@github.com:tarsius/hl-todo.git
+	ignore = dirty
 [submodule "ht"]
 	path = lib/ht
 	url = git@github.com:Wilfred/ht.el.git
+	ignore = dirty
 [submodule "hydra"]
 	path = lib/hydra
 	url = git@github.com:abo-abo/hydra.git
+	ignore = dirty
 [submodule "hyperspec"]
 	path = lib/hyperspec
 	url = git@github.com:emacsorphanage/hyperspec.git
+	ignore = dirty
 [submodule "image+"]
 	path = lib/image+
 	url = git@github.com:mhayashi1120/Emacs-imagex.git
+	ignore = dirty
 [submodule "ivy"]
 	path = lib/ivy
 	url = git@github.com:abo-abo/swiper.git
+	ignore = dirty
 [submodule "list-utils"]
 	path = lib/list-utils
 	url = git@github.com:rolandwalker/list-utils.git
+	ignore = dirty
 [submodule "loop"]
 	path = lib/loop
 	url = git@github.com:Wilfred/loop.el.git
+	ignore = dirty
 [submodule "magit"]
 	path = lib/magit
 	url = git@github.com:magit/magit.git
 	info-path = Documentation
+	ignore = dirty
 [submodule "magit-popup"]
 	path = lib/magit-popup
 	url = git@github.com:magit/magit-popup.git
+	ignore = dirty
 [submodule "mu4e"]
 	path = lib/mu4e
 	url = git@github.com:djcb/mu.git
@@ -161,84 +209,115 @@
 	build-step = make -C mu4e > /dev/null
 	build-step = "(borg-update-autoloads \"mu4e\")"
 	load-path = mu4e
+	ignore = dirty
 [submodule "mu4e-alert"]
 	path = lib/mu4e-alert
 	url = git@github.com:iqbalansari/mu4e-alert.git
+	ignore = dirty
 [submodule "multi-magit"]
 	path = lib/multi-magit
 	url = git@github.com:notmgsk/emacs.g.git
+	ignore = dirty
 [submodule "multiple-cursors"]
 	path = lib/multiple-cursors
 	url = git@github.com:magnars/multiple-cursors.el.git
+	ignore = dirty
 [submodule "nav-flash"]
 	path = lib/nav-flash
 	url = git@github.com:rolandwalker/nav-flash.git
+	ignore = dirty
 [submodule "oauth2"]
 	path = lib/oauth2
 	url = git@github.com:emacsmirror/oauth2.git
+	ignore = dirty
 [submodule "org"]
 	path = lib/org
 	url = https://code.orgmode.org/bzg/org-mode.git
+	ignore = dirty
+[submodule "org-journal"]
+	path = lib/org-journal
+	url = git@github.com:bastibe/org-journal.git
 [submodule "packed"]
 	path = lib/packed
 	url = git@github.com:emacscollective/packed.git
+	ignore = dirty
 [submodule "paredit"]
 	path = lib/paredit
 	url = https://mumble.net/~campbell/git/paredit.git
+	ignore = dirty
 [submodule "pdf-tools"]
 	path = lib/pdf-tools
 	url = git@github.com:politza/pdf-tools.git
+	ignore = dirty
 [submodule "pyvenv"]
 	path = lib/pyvenv
 	url = git@github.com:jorgenschaefer/pyvenv.git
+	ignore = dirty
 [submodule "rainbow-mode"]
 	path = lib/rainbow-mode
 	url = git@github.com:emacsmirror/rainbow-mode.git
+	ignore = dirty
 [submodule "request"]
 	path = lib/request
 	url = git@github.com:tkf/emacs-request.git
+	ignore = dirty
 [submodule "rich-minority"]
 	path = lib/rich-minority
 	url = git@github.com:Malabarba/rich-minority.git
+	ignore = dirty
 [submodule "s"]
 	path = lib/s
 	url = git@github.com:magnars/s.el.git
+	ignore = dirty
 [submodule "shut-up"]
 	path = lib/shut-up
 	url = git@github.com:cask/shut-up.git
+	ignore = dirty
 [submodule "slack"]
 	path = lib/slack
 	url = git@github.com:yuya373/emacs-slack.git
+	ignore = dirty
 [submodule "slime"]
 	path = lib/slime
 	url = git@github.com:slime/slime.git
+	ignore = dirty
 [submodule "slime-company"]
 	path = lib/slime-company
 	url = git@github.com:anwyn/slime-company.git
+	ignore = dirty
 [submodule "smart-mode-line"]
 	path = lib/smart-mode-line
 	url = git@github.com:Malabarba/smart-mode-line.git
+	ignore = dirty
 [submodule "solarized-theme"]
 	path = lib/solarized-theme
 	url = git@github.com:bbatsov/solarized-emacs.git
+	ignore = dirty
 [submodule "swiper"]
 	path = lib/swiper
 	url = git@github.com:notmgsk/emacs.g.git
+	ignore = dirty
 [submodule "tablist"]
 	path = lib/tablist
 	url = git@github.com:politza/tablist.git
+	ignore = dirty
 [submodule "use-package"]
 	path = lib/use-package
 	url = git@github.com:jwiegley/use-package.git
+	ignore = dirty
 [submodule "websocket"]
 	path = lib/websocket
 	url = git@github.com:ahyatt/emacs-websocket.git
+	ignore = dirty
 [submodule "which-key"]
 	path = lib/which-key
 	url = git@github.com:justbur/emacs-which-key.git
+	ignore = dirty
 [submodule "with-editor"]
 	path = lib/with-editor
 	url = git@github.com:magit/with-editor.git
+	ignore = dirty
 [submodule "yasnippet"]
 	path = lib/yasnippet
 	url = git@github.com:joaotavora/yasnippet.git
+	ignore = dirty
