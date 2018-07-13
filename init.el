@@ -337,6 +337,9 @@
                       url
                       (truncate-string-to-width url (if arg (prefix-numeric-value arg) fill-column) nil nil "..."))))))
 
+(use-package org-journal
+  :demand t)
+
 (use-package mu4e
   :defer t
   :init
