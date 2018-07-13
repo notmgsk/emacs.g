@@ -237,6 +237,7 @@
 [submodule "org-journal"]
 	path = lib/org-journal
 	url = git@github.com:bastibe/org-journal.git
+	ignore = dirty
 [submodule "packed"]
 	path = lib/packed
 	url = git@github.com:emacscollective/packed.git
