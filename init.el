@@ -516,12 +516,66 @@
   (which-key-mode))
 
 (use-package circe
+  :hook (circe-channel-mode-hook . me/circe-set-prompt)
   :init
-  (setq circe-network-options
-        '(("Freenode"
-           :tls t
-           :nick "mgsk"
-           :channels ("#symbollox" "#bspwm")))))
+  (setq auth-sources '("~/.authinfo"))
+  (defun my/fetch-password (&rest params)
+    (require 'auth-source)
+    (let ((match (car (apply 'auth-source-search params))))
+      (if match
+          (let ((secret (plist-get match :secret)))
+            (if (functionp secret)
+                (funcall secret)
+              secret))
+        (error "Password not found for %S" params))))
+  (defun my/znc-password (server)
+    (my/fetch-password :login "mgsk" :machine "notmg.sk"))
+  (setq
+   circe-network-options
+   '(("Freenode"
+      :tls t
+      :nick "mgsk"
+      :channels ("#symbollox" "#bspwm"))
+     ("znc"
+      :host "notmg.sk"
+      :port 7778
+      :nick "mgsk"
+      :pass my/znc-password
+      :tls t))
+   circe-reduce-lurker-spam t
+   circe-format-say "{nick:10.10s}> {body}"
+   circe-format-self-say "{nick:10.10s}> {body}"
+   circe-format-server-lurker-activity
+   "            *** First activity: {nick} joined {joindelta} ago.")
+
+  (defun me/circe-set-prompt ()
+    (interactive)
+    (lui-set-prompt (format "%s>" (circe-nick)))))
+
+(use-package circe-color-nicks
+  :after circe
+  :config
+  (enable-circe-color-nicks))
+
+(use-package lui
+  :hook (lui-mode . my/lui-setup)
+  :init
+  (setq
+   lui-fill-type "          | "
+   lui-fill-column 80
+   lui-time-stamp-position 'right-margin
+   lui-time-stamp-format "%H:%M")
+  (defun my/lui-setup ()
+    (interactive)
+    (setq
+     fringes-outside-margins t
+     right-margin-width 5
+     word-wrap t
+     wrap-prefix "    ")))
+
+(use-package lui-logging
+  :after lui)
+
 (use-package expand-region)
 
 (use-package url
