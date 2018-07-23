@@ -170,7 +170,7 @@
   (advice-add #'swiper :after #'nav-flash-show))
 
 (use-package pdf-tools
-  :demand
+  :defer 5 
   :config
   (pdf-tools-install))
 
