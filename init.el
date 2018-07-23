@@ -749,8 +749,9 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
       (setq ring-bell-function 'ignore)))
 
   (global-display-line-numbers-mode)
-  (setq-default truncate-lines t)
-  (setq auto-hscroll-mode 'current-line))
+  ;; (setq-default truncate-lines t)
+  ;; (setq auto-hscroll-mode 'current-line)
+  )
 
 ;; Local Variables:
 ;; indent-tabs-mode: nil
