@@ -702,9 +702,8 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
             (lambda ()
               (let* ((current-bg (face-attribute 'default :background))
                      (new-bg (my/lighten-color current-bg -1)))
-                (custom-set-faces `(auto-dim-other-buffers-face ((t (:background ,new-bg)))))))))
-
-(setq auto-dim-other-buffers-mode-hook nil)
+                (custom-set-faces `(auto-dim-other-buffers-face ((t (:background ,new-bg))))))))
+  (setq auto-dim-other-buffers-mode-hook nil))
 
 (progn                                  ;     personalize
   (let ((file (expand-file-name (concat (user-real-login-name) ".el")
