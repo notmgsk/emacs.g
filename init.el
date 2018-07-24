@@ -191,7 +191,15 @@
           slime-complete-symbol-function 'slime-fuzzy-complete-symbol
           common-lisp-hyperspec-root "http://www.lispworks.com/reference/HyperSpec/"))
   :config
-  (slime-setup))
+  (slime-setup)
+  ;; Add a quicklisp shortcut to the slime REPL
+  (defslime-repl-shortcut nil
+    ("quicklisp quickload" "ql")
+    (:handler (lambda ()
+                (interactive)
+                (insert "(ql:quickload :)")
+                (backward-char)))
+    (:one-liner "Use quicklisp to quickload a package")))
 
 (use-package swiper
   :after ivy
