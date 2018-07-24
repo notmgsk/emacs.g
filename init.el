@@ -713,6 +713,9 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
                 (custom-set-faces `(auto-dim-other-buffers-face ((t (:background ,new-bg))))))))
   (setq auto-dim-other-buffers-mode-hook nil))
 
+(use-package epkg
+  :bind ("M-m p l" . #'epkg-list-packages))
+
 (progn                                  ;     personalize
   (let ((file (expand-file-name (concat (user-real-login-name) ".el")
                                 user-emacs-directory)))
