@@ -575,6 +575,8 @@
 
 (use-package lui-logging
   :after lui)
+(use-package imenu
+  :bind ("M-m i" . counsel-imenu))
 
 (use-package expand-region)
 
