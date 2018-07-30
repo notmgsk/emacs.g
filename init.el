@@ -574,7 +574,10 @@
      wrap-prefix "    ")))
 
 (use-package lui-logging
-  :after lui)
+  :after lui
+  :config
+  (enable-lui-logging-globally))
+
 (use-package imenu
   :bind ("M-m i" . counsel-imenu))
 
