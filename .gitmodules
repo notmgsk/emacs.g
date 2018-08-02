@@ -33,6 +33,10 @@
 	path = lib/circe
 	url = git@github.com:jorgenschaefer/circe.git
 	ignore = dirty
+[submodule "circe-notifications"]
+	path = lib/circe-notifications
+	url = git@github.com:eqyiel/circe-notifications.git
+	ignore = dirty
 [submodule "closql"]
 	path = lib/closql
 	url = git@github.com:emacscollective/closql.git

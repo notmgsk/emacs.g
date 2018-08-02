@@ -557,6 +557,18 @@
   :config
   (enable-circe-color-nicks))
 
+(use-package circe-notifications
+  :after circe
+  :init
+  (setq circe-notifications-watch-strings '("mgsk")
+        circe-notifications-alert-style 'osx-notifier)
+  :hook '(circe-server-connected . enable-circe-notifications)
+  :config
+  ;; For some reason alert uses the message buffer on top of using
+  ;; desktop notifications, which is kinda annoying. Redefine the
+  ;; function to do nothing.
+  (defun alert-message-notify (info) nil))
+
 (use-package lui
   :hook (lui-mode . my/lui-setup)
   :init
