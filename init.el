@@ -571,7 +571,14 @@ Note: depends on expand-region."
 
   (defun me/circe-set-prompt ()
     (interactive)
-    (lui-set-prompt (format "%s>" (circe-nick)))))
+    (lui-set-prompt (format "%s>" (circe-nick))))
+
+  (defun my/circe-all-chat-buffers ()
+    (mapcan (lambda (buf)
+              (with-current-buffer buf
+                (with-circe-server-buffer
+                  (circe-server-chat-buffers))))
+            (circe-server-buffers))))
 
 (use-package circe-color-nicks
   :after circe
