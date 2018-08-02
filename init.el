@@ -314,6 +314,27 @@
       (org-cut-subtree))
      (t
       (org-kill-line))))
+
+  (defun my/org-insert-link (url)
+    (interactive "sURL: ")
+    (let ((title (or (my/url-get-title url)
+                     (read-string "Title: "))))
+      (insert (format "[[%s][%s]]" url title))))
+
+  (defun my/org-swap-link-with-title ()
+    "Replaces a raw URL with an org link. Automatically retrieves
+the URL's title (if available) and uses that for the org link
+description. If no title can be found, user is prompted for one.
+
+Note: depends on expand-region."
+    (interactive)
+    (let ((url (url-get-url-at-point)))
+      (when url
+        (er/mark-url)
+        (kill-region (region-beginning)
+                     (region-end))
+        (my/org-insert-link url))))
+
   :hook (org-mode . auto-fill-mode)
   :hook (org-mode . (lambda () (setq fill-column 80)))
   :config
