@@ -668,7 +668,7 @@ Note: depends on expand-region."
 
 (defun my/load-dark-theme ()
   (interactive)
-  (load-theme/doom-dracula))
+  (load-theme/solarized-dark))
 
 (defun my/load-light-theme ()
   (interactive)
