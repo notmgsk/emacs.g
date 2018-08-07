@@ -278,6 +278,10 @@
 	path = lib/shut-up
 	url = git@github.com:cask/shut-up.git
 	ignore = dirty
+[submodule "sicp"]
+	path = lib/sicp
+	url = git@github.com:webframp/sicp-info.git
+	ignore = dirty
 [submodule "slack"]
 	path = lib/slack
 	url = git@github.com:yuya373/emacs-slack.git
