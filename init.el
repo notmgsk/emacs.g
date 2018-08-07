@@ -579,7 +579,8 @@ Note: depends on expand-region."
    circe-format-say "{nick:10.10s}> {body}"
    circe-format-self-say "{nick:10.10s}> {body}"
    circe-format-server-lurker-activity
-   "            *** First activity: {nick} joined {joindelta} ago.")
+   "            *** First activity: {nick} joined {joindelta} ago."
+   circe-server-send-unknown-command-p t)
 
   (defun me/circe-set-prompt ()
     (interactive)
