@@ -790,7 +790,9 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
           ;;          (equal server-name "mail"))
           ;;     "-CYEL-Iosevka Term-light-normal-normal-*-11-*-*-*-m-0-iso10646-1"
           ;;   "-pyrs-Roboto Mono-normal-normal-normal-*-19-*-*-*-*-0-iso10646-1")
-          "-pyrs-Roboto Mono-normal-normal-normal-*-12-*-*-*-*-0-iso10646-1")
+          "-*-Inconsolata Nerd Font-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1"
+          ;; "-pyrs-Roboto Mono-normal-normal-normal-*-12-*-*-*-*-0-iso10646-1"
+          )
     (set-frame-font my/emacs-font)
 
     (my/load-dark-theme)
