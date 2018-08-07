@@ -719,7 +719,8 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
        (when (featurep 'setup-linum)
          (modi/blend-linum))
        (when (featurep 'smart-mode-line)
-         (sml/apply-theme ,dark nil :silent)) ; apply sml theme silently
+         ;; (sml/apply-theme ,dark nil :silent)
+         (sml/apply-theme 'respectful nil :silent)) ; apply sml theme silently
        (when (featurep 'fill-column-indicator)
          ;; Below commented code does not work
          ;; (setq fci-rule-color (face-foreground 'font-lock-comment-face))
