@@ -356,7 +356,19 @@ Note: depends on expand-region."
       (kill-region (car bounds) (cdr bounds))
       (insert (format "[[%s][%s]]"
                       url
-                      (truncate-string-to-width url (if arg (prefix-numeric-value arg) fill-column) nil nil "..."))))))
+                      (truncate-string-to-width url (if arg (prefix-numeric-value arg) fill-column) nil nil "...")))))
+
+  ;; Stop org putting check boxes where I don't want them
+  (defun my/org-insert-todo-heading (arg)
+    (previous-line)
+    (goto-char (line-beginning-position))
+    (when (not (and (search-forward "[" (line-end-position) t)
+                    (org-at-item-checkbox-p)))
+      (next-line)
+      (goto-char (line-end-position))
+      (delete-backward-char 4)))
+
+  (advice-add #'org-insert-todo-heading :after #'my/org-insert-todo-heading))
 
 (use-package org-journal
   :demand t
