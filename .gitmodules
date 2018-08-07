@@ -254,6 +254,10 @@
 	path = lib/pdf-tools
 	url = git@github.com:politza/pdf-tools.git
 	ignore = dirty
+[submodule "prescient"]
+	path = lib/prescient
+	url = git@github.com:raxod502/prescient.el.git
+	ignore = dirty
 [submodule "pyvenv"]
 	path = lib/pyvenv
 	url = git@github.com:jorgenschaefer/pyvenv.git

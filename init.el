@@ -506,6 +506,11 @@ Note: depends on expand-region."
   (eldoc-add-command 'paredit-backward-delete
                      'paredit-close-round))
 
+(use-package prescient)
+(use-package ivy-prescient
+  :after ivy
+  :config (ivy-prescient-mode))
+
 (use-package prog-mode
   :config (global-prettify-symbols-mode)
   (defun indicate-buffer-boundaries-left ()
