@@ -665,6 +665,7 @@ Note: depends on expand-region."
                       (doom-Iosvkem         'dark  "gray40")
                       (misterioso           'dark  "gray40")
                       (zenburn-theme        'dark  "gray40")
+                      (doom-tomorrow-night  'dark  "gray40")
                       (leuven               'light "gray")
                       (solarized-light      'light "gray")
                       (doom-solarized-light 'light "gray")
