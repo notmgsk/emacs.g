@@ -21,6 +21,9 @@
 	path = lib/auto-compile
 	url = git@github.com:emacscollective/auto-compile.git
 	ignore = dirty
+[submodule "auto-complete"]
+	path = lib/auto-complete
+	url = git@github.com:auto-complete/auto-complete.git
 [submodule "auto-dim-other-buffers"]
 	path = lib/auto-dim-other-buffers
 	url = https://github.com/mina86/auto-dim-other-buffers.el.git
@@ -48,6 +51,9 @@
 	path = lib/closql
 	url = git@github.com:emacscollective/closql.git
 	ignore = dirty
+[submodule "color-theme-sanityinc-tomorrow"]
+	path = lib/color-theme-sanityinc-tomorrow
+	url = git@github.com:purcell/color-theme-sanityinc-tomorrow.git
 [submodule "company"]
 	path = lib/company
 	url = git@github.com:company-mode/company-mode.git
@@ -105,6 +111,9 @@
 	path = lib/eimp
 	url = git@github.com:nicferrier/eimp.git
 	ignore = dirty
+[submodule "ein"]
+	path = lib/ein
+	url = git@github.com:millejoh/emacs-ipython-notebook.git
 [submodule "eldoc-eval"]
 	ignore = dirty
 	path = lib/eldoc-eval
@@ -121,6 +130,9 @@
 	path = lib/elpy
 	url = git@github.com:jorgenschaefer/elpy.git
 	ignore = dirty
+[submodule "emacs-jupyter"]
+	path = lib/emacs-jupyter
+	url = https://github.com/dzop/emacs-jupyter
 [submodule "emacsql"]
 	path = lib/emacsql
 	url = git@github.com:skeeto/emacsql.git
@@ -130,6 +142,9 @@
 	path = lib/emojify
 	url = git@github.com:iqbalansari/emacs-emojify.git
 	ignore = dirty
+[submodule "emr"]
+	path = lib/emr
+	url = git@github.com:Wilfred/emacs-refactor.git
 [submodule "epkg"]
 	path = lib/epkg
 	url = git@github.com:emacscollective/epkg.git
@@ -182,6 +197,9 @@
 	ignore = dirty
 	path = lib/graphql
 	url = git@github.com:vermiculus/graphql.el.git
+[submodule "green-is-the-new-black-theme"]
+	path = lib/green-is-the-new-black-theme
+	url = git@github.com:fredcamps/green-is-the-new-black-emacs.git
 [submodule "helpful"]
 	path = lib/helpful
 	url = git@github.com:Wilfred/helpful.git
@@ -206,6 +224,9 @@
 	path = lib/hyperspec
 	url = git@github.com:emacsorphanage/hyperspec.git
 	ignore = dirty
+[submodule "iedit"]
+	path = lib/iedit
+	url = git@github.com:victorhge/iedit.git
 [submodule "image+"]
 	path = lib/image+
 	url = git@github.com:mhayashi1120/Emacs-imagex.git
@@ -214,6 +235,9 @@
 	path = lib/ivy
 	url = git@github.com:abo-abo/swiper.git
 	ignore = dirty
+[submodule "js2-mode"]
+	path = lib/js2-mode
+	url = git@github.com:mooz/js2-mode.git
 [submodule "julia-mode"]
 	ignore = dirty
 	path = lib/julia-mode
@@ -222,6 +246,15 @@
 	ignore = dirty
 	path = lib/julia-shell
 	url = git@github.com:dennisog/julia-shell-mode.git
+[submodule "jupyter"]
+	path = lib/jupyter
+	url = https://github.com/dzop/emacs-jupyter.git
+[submodule "key-chord"]
+	path = lib/key-chord
+	url = git@github.com:emacsorphanage/key-chord.git
+[submodule "lispy"]
+	path = lib/lispy
+	url = git@github.com:abo-abo/lispy.git
 [submodule "list-utils"]
 	path = lib/list-utils
 	url = git@github.com:rolandwalker/list-utils.git
@@ -317,6 +350,12 @@
 	path = lib/pdf-tools
 	url = git@github.com:politza/pdf-tools.git
 	ignore = dirty
+[submodule "polymode"]
+	path = lib/polymode
+	url = git@github.com:polymode/polymode.git
+[submodule "popup"]
+	path = lib/popup
+	url = git@github.com:auto-complete/popup-el.git
 [submodule "prescient"]
 	path = lib/prescient
 	url = git@github.com:raxod502/prescient.el.git
@@ -341,6 +380,9 @@
 	path = lib/rich-minority
 	url = git@github.com:Malabarba/rich-minority.git
 	ignore = dirty
+[submodule "rotate"]
+	path = lib/rotate
+	url = git@github.com:daichirata/emacs-rotate.git
 [submodule "s"]
 	path = lib/s
 	url = git@github.com:magnars/s.el.git
@@ -357,6 +399,12 @@
 	path = lib/sicp
 	url = git@github.com:webframp/sicp-info.git
 	ignore = dirty
+[submodule "simple-httpd"]
+	path = lib/simple-httpd
+	url = git@github.com:skeeto/emacs-web-server.git
+[submodule "skewer-mode"]
+	path = lib/skewer-mode
+	url = git@github.com:skeeto/skewer-mode.git
 [submodule "slack"]
 	path = lib/slack
 	url = git@github.com:yuya373/emacs-slack.git
@@ -381,10 +429,16 @@
 	ignore = dirty
 	path = lib/spinner
 	url = git@github.com:Malabarba/spinner.el.git
+[submodule "stream"]
+	path = lib/stream
+	url = git@github.com:emacsmirror/stream.git
 [submodule "tablist"]
 	path = lib/tablist
 	url = git@github.com:politza/tablist.git
 	ignore = dirty
+[submodule "transient"]
+	path = lib/transient
+	url = git@github.com:magit/transient.git
 [submodule "treepy"]
 	ignore = dirty
 	path = lib/treepy
@@ -397,10 +451,16 @@
 	path = lib/use-package
 	url = git@github.com:jwiegley/use-package.git
 	ignore = dirty
+[submodule "uuidgen"]
+	path = lib/uuidgen
+	url = git@github.com:kanru/uuidgen-el.git
 [submodule "websocket"]
 	path = lib/websocket
 	url = git@github.com:ahyatt/emacs-websocket.git
 	ignore = dirty
+[submodule "wgrep"]
+	path = lib/wgrep
+	url = https://github.com/mhayashi1120/Emacs-wgrep
 [submodule "which-key"]
 	path = lib/which-key
 	url = git@github.com:justbur/emacs-which-key.git
@@ -417,3 +477,6 @@
 	ignore = dirty
 	path = lib/zenburn-theme
 	url = https://github.com/bbatsov/zenburn-emacs.git
+[submodule "zmq"]
+	path = lib/zmq
+	url = git@github.com:dzop/emacs-zmq.git

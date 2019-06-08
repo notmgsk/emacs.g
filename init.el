@@ -22,8 +22,9 @@
   (borg-initialize))
 
 (progn ;    `use-package'
-  (require  'use-package)
-  (setq use-package-verbose t))
+  (setq use-package-enable-imenu-support t)
+  (setq use-package-verbose t)
+  (require  'use-package))
 
 (eval-and-compile
   (mapc #'(lambda (entry)
@@ -43,18 +44,48 @@
           ("C-. g" . my-ctrl-dot-g-map)
           ("C-. h" . my-ctrl-dot-h-map)
           ("C-. m" . my-ctrl-dot-m-map)
-          ("C-. r" . my-ctrl-dot-r-map))))
+          ("C-. r" . my-ctrl-dot-r-map)))
+  (setq dk-keymap (make-sparse-keymap))
+  (setq sl-keymap (make-sparse-keymap))
 
-(use-package exec-path-from-shell  
+  (defun add-to-keymap (keymap bindings)
+    (dolist (binding bindings)
+      (define-key keymap (kbd (car binding)) (cdr binding))))
+
+  (defun add-to-dk-keymap (bindings)
+    (add-to-keymap dk-keymap bindings))
+
+  (defun add-to-sl-keymap (bindings)
+    (add-to-keymap sl-keymap bindings)))
+
+(use-package exec-path-from-shell
   :config
   (exec-path-from-shell-initialize))
 
-(use-package diminish)
-
-(use-package general
+(use-package key-chord
   :demand t
-  :load-path "site-lisp/general.el"
-  :bind ("M-m"))
+  :config
+  (key-chord-define-global "dk" dk-keymap)
+  (key-chord-define-global "sl" sl-keymap)
+  (add-to-dk-keymap
+   '(("m" . execute-command-on-file-buffer)
+     ("d" . dired-jump)
+     ("b" . ivy-switch-buffer)
+     ("r" . quickrun-region)
+     ("R" . quickrun)
+     ("<SPC>" . rgrep)
+     ("s" . save-buffer)
+     ("S" . howdoi-query-line-at-point-replace-by-code-snippet)
+     ("t" . eshell-here)
+     ("/" . find-name-dired)
+     ("e" . eval-last-sexp)))
+  (setq key-chord-two-keys-delay 0.05))
+
+(use-package use-package-chords
+  :demand t
+  :config (key-chord-mode 1))
+
+(use-package diminish)
 
 (use-package subr-x
   :config
@@ -75,22 +106,17 @@
             'auto-compile-inhibit-compile-detached-git-head))
 
 (use-package ace-window
-  :general
-  ("M-m jw" #'ace-window)
-  ("M-m kw" #'ace-delete-window))
+  :chords
+  ("jw" . ace-window)
+  ("kw" . ace-delete-window))
 
 (use-package avy
   :after ivy
-  :general
-  ("M-m jc" #'avy-goto-char)
   :config
   (avy-setup-default))
 
-;; (use-package auctex)
-
 (use-package epkg
   :defer t
-  :bind ("M-m p l" . #'epkg-list-packages)
   :init (setq epkg-repository
               (expand-file-name "var/epkgs/" user-emacs-directory)))
 
@@ -98,20 +124,15 @@
   :after ivy
   :demand t
   :diminish
-  ;; :custom (counsel-find-file-ignore-regexp
-  ;;          (concat "\\(\\`\\.\\|"
-  ;;                  (regexp-opt completion-ignored-extensions)
-  ;;                  "\\)"))
   :bind (("C-*"     . counsel-org-agenda-headlines)
          ("C-x C-f" . counsel-find-file)
          ("M-x"     . counsel-M-x))
+  :chords
+  ("lw" . counsel-M-x)
   :commands (counsel-minibuffer-history
              counsel-find-library
              counsel-unicode-char)
-  :init
-  (bind-key "M-r" #'counsel-minibuffer-history minibuffer-local-map)
-  :general
-  ("M-m ry" #'counsel-yank-pop)
+  :init (add-to-dk-keymap '(("y" . counsel-yank-pop)))
   :config
   (add-to-list 'ivy-sort-matches-functions-alist
 	       '(counsel-find-file . ivy--sort-files-by-date)))
@@ -132,17 +153,10 @@
   (setq python-shell-interpreter "ipython"
         python-shell-interpreter-args "-i --simple-prompt")
   (setenv "WORKON_HOME" "/Users/mark.skilbeck/anaconda3/envs")
-  :config  
-  (elpy-enable)
-  (pyvenv-mode 1))
+  :config
+  (elpy-enable))
 
-;; (use-package conda
-;;   :after elpy
-;;   :init
-;;   (setq conda-anaconda-home "~/anaconda3/")
-;;   :config
-;;   (conda-env-initialize-interactive-shells)
-;;   (conda-env-autoactivate-mode t))
+(use-package ein)
 
 (use-package helpful
   :bind (("C-h f"	. helpful-function)
@@ -167,6 +181,9 @@
   (ivy-use-virtual-buffers t)
   (ivy-wrap t)
 
+  :bind (("C-x b" . ivy-switch-buffer)
+         ("C-x C-b" . ivy-switch-buffer))
+
   :config
   (ivy-mode 1)
   (ivy-set-occur 'ivy-switch-buffer 'ivy-switch-buffer-occur)
@@ -178,8 +195,10 @@
   :config
   (advice-add #'swiper :after #'nav-flash-show))
 
+;; TODO Figure out how to have pdf-tools load only when i first
+;; visit a pdf file
 ;; (use-package pdf-tools
-;;   :defer 5 
+;;   :defer 5
 ;;   :config
 ;;   (pdf-tools-install))
 
@@ -197,9 +216,7 @@
                          slime-company)
         inferior-lisp-program "sbcl"
         slime-complete-symbol*-fancy t
-        slime-complete-symbol-function 'slime-fuzzy-complete-symbol
-        shr-width 100
-        shr-use-fonts nil)
+        slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
   :config
   (slime-setup)
   ;; TODO use-package
@@ -225,6 +242,8 @@
                          (my/slime-read-ql-system "System: " p))))
     (slime-repl-send-string (format "(ql:quickload %S)" package)))
 
+  (load-file "slimemacs.el")
+
   (defslime-repl-shortcut nil
     ("quicklisp quickload" "ql")
     (:handler 'my/slime-repl-quickload)
@@ -233,6 +252,15 @@
     ("clear" "cl")
     (:handler 'slime-repl-clear-buffer)
     (:one-liner "Clear the REPL buffer")))
+
+(use-package lispy
+  :hook ((emacs-lisp-mode . lispy-mode)
+         (lisp-mode . lispy-mode))
+  :config
+  (lispy-define-key lispy-mode-map ":" 'self-insert-command))
+
+(use-package iedit
+  :bind ("C-;" . iedit-mode))
 
 (use-package swiper
   :after ivy
@@ -249,7 +277,11 @@
   :config
   (advice-add #'swiper :after #'nav-flash-show))
 
-(progn ;     startup
+(use-package project
+             :init
+             (add-to-dk-keymap '(("p" . project-find-regexp))))
+
+(progn                                  ;     startup
   (message "Loading early birds...done (%.3fs)"
            (float-time (time-subtract (current-time)
                                       before-user-init-time))))
@@ -290,6 +322,17 @@
   :after elpy
   :config (global-eldoc-mode))
 
+(use-package eshell
+  :init
+  (defun eshell-here () (interactive) (eshell t))
+  (add-to-dk-keymap '(("t" . #'eshell-here))))
+
+(use-package elisp-mode)
+
+(use-package ibuffer
+  ;; :bind ("C-x C-b" . ibuffer)
+  )
+
 (use-package help
   :defer t
   :config (temp-buffer-resize-mode))
@@ -299,14 +342,14 @@
 
 (use-package magit
   :defer t
-  ;; :load-path ("site-lisp/magit/lisp")
-  :general
-  ("M-m gs" #'magit-status)
   :commands (magit-clone my/rm-git-index-lock magit-status)
-  :bind (:map magit-log-mode-map
-              ("@" . (lambda ()
-                       (interactive)
-                       (magit-checkout (magit-branch-or-commit-at-point)))))
+  :bind ((:map sl-keymap
+               ("s" . magit-status))
+         (:map magit-log-mode-map
+               ("@" . (lambda ()
+                        (interactive)
+                        (magit-checkout (magit-branch-or-commit-at-point))))))
+
   :config
   (setq-default magit-repository-directories
                 '(("~/hackery/" . 1)))
@@ -314,39 +357,39 @@
                           'magit-insert-modules
                           'magit-insert-stashes
                           'append)
-  (setq magit-diff-refine-hunk 'all)) 
+  (setq magit-diff-refine-hunk 'all)
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"
+        ghub-use-workaround-for-emacs-bug nil))
 
-;; (use-package multi-magit
-;;   ;; :load-path "site-lisp/multi-magit"
-;;   :after magit
-;;   :commands (multi-magit-list-repositories
-;; 	     multi-magit-status))
+(use-package forge
+  :after magit)
+
+(use-package git-link
+  :demand t)
 
 (use-package multiple-cursors
   :defer t
-  :general
-  ("C->" #'mc/mark-next-like-this)
-  ("C-<" #'mc/mark-previous-like-this)
-  ("C-c C->" #'mc/mark-all-like-this)
-  ("C-c (" #'mc/mark-all-in-region))
+  :bind (("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-c C->" . mc/mark-all-like-this)
+         ("C-c (" . mc/mark-all-in-region)))
 
 (use-package man
   :defer t
   :config (setq Man-width 80))
 
 (use-package org
-  :defer
-  :general
-  ("C-c c" #'org-capture)
-  ("M-m on" (lambda ()
-              (interactive)
-              (find-file org-default-notes-file)))
-  :bind (:map org-mode-map
-	      ("C-_" . undo)
-	      ("<C-M-return>" . org-insert-item)
-              ("C-k" . my/org-kill-dwim))
-  :bind (("C-c C-x C-i" . org-mode-clock-clock-in)
-         ("C-c C-x C-o" . org-mode-clock-clock-out))
+  :defer t
+  :bind (("C-c c" . org-capture)
+         ;; ("M-m  on" . (lambda ()
+         ;;               (interactive)
+         ;;               (find-file org-default-notes-file)))
+         ("C-c C-x C-i" . org-mode-clock-clock-in)
+         ("C-c C-x C-o" . org-mode-clock-clock-out)
+         (:map org-mode-map
+	       ("C-_" . undo)
+	       ("<C-M-return>" . org-insert-item)
+               ("C-k" . my/org-kill-dwim)))
   :preface
   (defun org-latex-format-headline-colored-keywords-function
       (todo todo-type priority text tags info)
@@ -360,9 +403,8 @@
                   (mapconcat (lambda (tag) (org-latex-plain-text tag info))
                              tags ":")))))
 
-  (setq org-latex-format-headline-function 'org-latex-format-headline-colored-keywords-function)
-
-  (setq org-hide-emphasis-markers t)
+  (setq org-latex-format-headline-function 'org-latex-format-headline-colored-keywords-function
+        org-hide-emphasis-markers t)
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
@@ -438,104 +480,8 @@ Note: depends on expand-region."
 (use-package org-journal
   :after org
   :demand t
-  :bind ("M-m o j" . org-journal-new-entry))
-
-;; (use-package mu4e
-;;   :defer t
-;;   :init
-;;   (setq mail-user-agent 'mu4e-user-agent)
-;;   :commands (mu4e)
-;;   :config
-;;   (require 'mu4e-contrib)
-;;   (setq mu4e-completing-read-function 'completing-read)
-;;   (setq mu4e-compose-dont-reply-to-self t)
-;;   (setq mu4e-compose-signature-auto-include nil)
-;;   (setq mu4e-maildir "~/Mail"
-;;         mu4e-trash-folder "/Trash"
-;;         mu4e-refile-folder "/Archive"
-;;         mu4e-get-mail-command "offlineimap"
-;;         mu4e-update-interval 300
-;;         mu4e-compose-signature-auto-include nil
-;;         mu4e-view-show-images t
-;;         mu4e-view-show-addresses t
-;;         mu4e-view-prefer-html t
-;;         mu4e-html2text-command 'mu4e-shr2text
-;;         mu4e-user-mail-address-list '("markskilbeck@gmail.com" "ppyms3@nottingham.ac.uk"
-;;                                       "ppyms3@exmail.nottingham.ac.uk")
-;;         shr-color-visible-luminance-min 60
-;;         shr-color-visible-distance-min 5
-;;         shr-width 80
-;;         )
-;;   (add-to-list 'mu4e-bookmarks
-;;                (make-mu4e-bookmark
-;;                 :name "Unread/flagged messages"
-;;                 :query "flag:unread AND NOT flag:trashed OR flag:flagged"
-;;                 :key ?u))
-;;   ;; Stops shr using funky colours that make things unreadable.
-;;   (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
-;;   (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
-
-;;   (setq org-mu4e-link-query-in-headers-mode nil)
-;;   (setq mu4e-sent-folder "/sent"
-;;         mu4e-drafts-folder "/drafts"
-;;         smtpmail-default-smtp-server "smtp.gmail.com"
-;;         smtpmail-smtp-server "smtp.gmail.com"
-;;         smtpmail-smtp-service 587
-;;         message-send-mail-function 'smtpmail-send-it)
-;;   (setq mu4e-headers-hide-predicate
-;;         (lambda (msg)
-;;           (member 'trashed (mu4e-message-field msg :flags))))
-
-;;   (setq my/mu4e-uni-context
-;;         (make-mu4e-context
-;;          :name "Uni"
-;;          :enter-func (lambda () (mu4e-message "Entering Uni context"))
-;;          :leave-func (lambda () (mu4e-message "Leaving Uni context"))
-;;          :match-func (lambda (msg)
-;;                        (when msg
-;;                          (mu4e-message-contact-field-matches
-;;                           msg
-;;                           '(:to :cc :bcc) '("ppyms3@nottingham.ac.uk"
-;;                                             "ppyms3@exmail.nottingham.ac.uk"))))
-;;          :vars '((user-mail-address . "ppyms3@nottingham.ac.uk")
-;;                  (user-full-name . "Mark Skilbeck")
-;;                  (mu4e-sent-folder . "/Uni/Sent Items")
-;;                  (mu4e-drafts-folder . "/Uni/Drafts")
-;;                  (user-mail-address . "ppyms3@exmail.nottingham.ac.uk")
-;;                  (smtpmail-smtp-user . "ppyms3@ad.nottingham.ac.uk")
-;;                  ;; (smtp-local-domain . "nottingham.ac.uk")
-;;                  ;; (smtpmail-default-smtp-server . "smtp.nottingham.ac.uk")
-;;                  ;; (smtpmail-smtp-server . "smtp.nottingham.ac.uk")
-;;                  ;; (smtpmail-smtp-service . 25)
-;;                  (smtp-local-domain . "office365.com")
-;;                  (smtpmail-default-smtp-server . "smtp.office365.com")
-;;                  (smtpmail-smtp-server . "smtp.office365.com")
-;;                  (smtpmail-smtp-service . 587)
-;;                  )))
-
-;;   (setq my/mu4e-personal-context
-;;         (make-mu4e-context
-;;          :name "Personal"
-;;          :enter-func (lambda () (mu4e-message "Entering Personal context"))
-;;          :leave-func (lambda () (mu4e-message "Leaving Personal context"))
-;;          :match-func (lambda (msg)
-;;                        (when msg
-;;                          (mu4e-message-contact-field-matches
-;;                           msg
-;;                           '(:to :cc :bcc) "markskilbeck@gmail.com")))
-;;          :vars '((user-mail-address . "markskilbeck@gmail.com")
-;;                  (user-full-name . "Mark Skilbeck")
-;;                  (mu4e-sent-folder . "/Personal/Sent Mail")
-;;                  (mu4e-drafts-folder . "/Personal/Drafts")
-;;                  (smtpmail-smtp-user . "markskilbeck@gmail.com")
-;;                  (smtp-local-domain . "gmail.com")
-;;                  (smtpmail-default-smtp-server . "smtp.gmail.com")
-;;                  (smtpmail-smtp-server . "smtp.gmail.com")
-;;                  (smtpmail-smtp-service . 587))))
-
-;;   (setq mu4e-contexts (list my/mu4e-personal-context my/mu4e-uni-context))
-;;   (setq mu4e-context-policy 'pick-first)
-;;   (setq mu4e-compose-context-policy 'ask))
+  ;; :bind ("M-m o j" . org-journal-new-entry) 
+  )
 
 (use-package paren
   :config (show-paren-mode))
@@ -592,17 +538,6 @@ Note: depends on expand-region."
 (use-package simple
   :config (column-number-mode))
 
-;; (use-package doom-modeline
-;;   :demand t
-;;   :init
-;;   (setq x-underline-at-descent-line t)
-;;   :hook (after-init . doom-modeline-init))
-
-;; (use-package smart-mode-line
-;;   :config
-;;   (setq sml/theme 'respectful)
-;;   (sml/setup))
-
 (progn                                  ;    `text-mode'
   (add-hook 'text-mode-hook #'indicate-buffer-boundaries-left))
 
@@ -621,101 +556,14 @@ Note: depends on expand-region."
   :config
   (which-key-mode))
 
-;; (use-package circe
-;;   :hook (circe-channel-mode-hook . me/circe-set-prompt)
-;;   :init
-;;   (setq auth-sources '("~/.authinfo"))
-;;   (defun my/fetch-password (&rest params)
-;;     (require 'auth-source)
-;;     (let ((match (car (apply 'auth-source-search params))))
-;;       (if match
-;;           (let ((secret (plist-get match :secret)))
-;;             (if (functionp secret)
-;;                 (funcall secret)
-;;               secret))
-;;         (error "Password not found for %S" params))))
-;;   (defun my/znc-password (server)
-;;     (message "test")
-;;     (my/fetch-password :login "mgsk" :machine "notmg.sk"))
-;;   (setq
-;;    circe-network-options
-;;    '(("Freenode"
-;;       :tls t
-;;       :nick "mgsk"
-;;       :channels ("#symbollox" "#bspwm"))
-;;      ("znc"
-;;       :host "notmg.sk"
-;;       :port 7778
-;;       :user "mgsk"
-;;       :nick "mgsk"
-;;       :pass my/znc-password
-;;       :tls t))
-;;    circe-reduce-lurker-spam t
-;;    circe-format-say "{nick:10.10s}> {body}"
-;;    circe-format-self-say "{nick:10.10s}> {body}"
-;;    circe-format-server-lurker-activity
-;;    "            *** First activity: {nick} joined {joindelta} ago."
-;;    circe-server-send-unknown-command-p t)
-
-;;   (defun me/circe-set-prompt ()
-;;     (interactive)
-;;     (lui-set-prompt (format "%s>" (circe-nick))))
-
-;;   (defun my/circe-all-chat-buffers ()
-;;     (mapcan (lambda (buf)
-;;               (with-current-buffer buf
-;;                 (with-circe-server-buffer
-;;                   (circe-server-chat-buffers))))
-;;             (circe-server-buffers))))
-
 (use-package solarized
   :init (setq solarized-use-more-italic t
               solarized-use-less-bold t
               solarized-high-contrast-mode t
               solarized-distinct-fringe-background nil))
 
-;; (use-package circe-color-nicks
-;;   :after circe
-;;   :config
-;;   (enable-circe-color-nicks))
-
-;; (use-package circe-notifications
-;;   :after circe
-;;   :init
-;;   (setq circe-notifications-watch-strings '("mgsk")
-;;         circe-notifications-alert-style 'osx-notifier)
-;;   :hook '(circe-server-connected . enable-circe-notifications)
-;;   :config
-;;   ;; For some reason alert uses the message buffer on top of using
-;;   ;; desktop notifications, which is kinda annoying. Redefine the
-;;   ;; function to do nothing.
-;;   (defun alert-message-notify (info) nil))
-
-;; (use-package lui
-;;   :hook (lui-mode . my/lui-setup)
-;;   :init
-;;   (setq
-;;    lui-fill-type "          | "
-;;    lui-fill-column 80
-;;    lui-time-stamp-position 'right-margin
-;;    lui-time-stamp-format "%H:%M")
-;;   (defun my/lui-setup ()
-;;     (interactive)
-;;     (setq
-;;      fringes-outside-margins t
-;;      right-margin-width 5
-;;      word-wrap t
-;;      wrap-prefix "    ")))
-
-;; (use-package lui-logging
-;;   :after lui
-;;   :config
-;;   (enable-lui-logging-globally))
-
 (use-package imenu
-  :bind ("M-m i" . counsel-imenu))
-
-;; (use-package expand-region)
+  :init (add-to-dk-keymap '(("i" . counsel-imenu))))
 
 (use-package org-jira
   :defer
@@ -723,7 +571,7 @@ Note: depends on expand-region."
   (setq jiralib-url "http://jira.lab.rigetti.com"))
 
 (use-package url
-  :defer 
+  :defer
   :config
   (defun my/url-get-title (url)
     (interactive "sURL: ")
@@ -782,6 +630,8 @@ Note: depends on expand-region."
   :bind (:map julia-mode-map
               ("C-c C-c" . julia-shell-run-region-or-line)))
 
+(use-package rotate)
+
 (defun my/load-theme (variant)
   (interactive
    (list (completing-read "Theme variant: "
@@ -804,6 +654,9 @@ Note: depends on expand-region."
   ;; (sml/apply-theme 'light)
   )
 
+(use-package doom-themes)
+(use-package color-theme-sanityinc-tomorrow)
+
 ;; TAKEN FROM https://github.com/kaushalmodi/.emacs.d/blob/e54b5b5b3943b8254a1315d9b9e69b8b9a259b29/setup-files/setup-visual.el#L29-L92
 ;;                     THEME-NAME           DARK   FCI-RULE-COLOR
 (defconst my/themes '((solarized-dark       'dark  "gray40")
@@ -815,6 +668,7 @@ Note: depends on expand-region."
                       (leuven               'light "gray")
                       (solarized-light      'light "gray")
                       (doom-solarized-light 'light "gray")
+                      (doom-tomorrow-day    'light "gray")
                       (github-modern-theme  'light "gray")
                       (default              'light "gray")) ; default emacs theme
   "Alist of themes I tend to switch to frequently.")
@@ -897,9 +751,18 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
       (format "#%06x" (logand num #xFFFFFF)))))
 
 (use-package undo-tree
-  :bind ("M-m u" . undo-tree-visualize)
+  :init (add-to-dk-keymap '(("u" . undo-tree-visualize)))
   :config
   (global-undo-tree-mode))
+
+(use-package simple
+  :chords
+  ("df" . undo))
+
+(use-package project
+  :init (add-to-dk-keymap '(("f" . project-find-regexp))))
+
+(use-package wgrep)
 
 (progn                                  ;     personalize
   (setq my/emacs-font-str
@@ -913,6 +776,9 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
     (setq my/emacs-font (-rotate -1 my/emacs-font)))
 
   (global-set-key (kbd "C-x C-8") #'my/rotate-font-size)
+
+  ;; Stop accidentally closing eamcs
+  ;; (global-unset-key (kbd "C-x C-c"))
 
   (my/load-dark-theme)
   (setq default-frame-alist
@@ -928,6 +794,8 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
   (blink-cursor-mode t)
   (setq split-width-threshold 120)
   (setq split-height-threshold 200)
+
+  (setq shell-file-name "/bin/bash")
 
   (when (eq system-type 'darwin) ;; mac specific settings
     (setq mac-option-modifier 'nil)

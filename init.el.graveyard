@@ -1,0 +1,202 @@
+;; Stuff I don't use, but don't want to delete.
+
+;;; IRC-related stuff
+
+(use-package circe
+  :hook (circe-channel-mode-hook . me/circe-set-prompt)
+  :init
+  (setq auth-sources '("~/.authinfo"))
+  (defun my/fetch-password (&rest params)
+    (require 'auth-source)
+    (let ((match (car (apply 'auth-source-search params))))
+      (if match
+          (let ((secret (plist-get match :secret)))
+            (if (functionp secret)
+                (funcall secret)
+              secret))
+        (error "Password not found for %S" params))))
+  (defun my/znc-password (server)
+    (message "test")
+    (my/fetch-password :login "mgsk" :machine "notmg.sk"))
+  (setq
+   circe-network-options
+   '(("Freenode"
+      :tls t
+      :nick "mgsk"
+      :channels ("#symbollox" "#bspwm"))
+     ("znc"
+      :host "notmg.sk"
+      :port 7778
+      :user "mgsk"
+      :nick "mgsk"
+      :pass my/znc-password
+      :tls t))
+   circe-reduce-lurker-spam t
+   circe-format-say "{nick:10.10s}> {body}"
+   circe-format-self-say "{nick:10.10s}> {body}"
+   circe-format-server-lurker-activity
+   "            *** First activity: {nick} joined {joindelta} ago."
+   circe-server-send-unknown-command-p t)
+
+  (defun me/circe-set-prompt ()
+    (interactive)
+    (lui-set-prompt (format "%s>" (circe-nick))))
+
+  (defun my/circe-all-chat-buffers ()
+    (mapcan (lambda (buf)
+              (with-current-buffer buf
+                (with-circe-server-buffer
+                 (circe-server-chat-buffers))))
+            (circe-server-buffers))))
+
+(use-package circe-color-nicks
+  :after circe
+  :config
+  (enable-circe-color-nicks))
+
+(use-package circe-notifications
+  :after circe
+  :init
+  (setq circe-notifications-watch-strings '("mgsk")
+        circe-notifications-alert-style 'osx-notifier)
+  :hook '(circe-server-connected . enable-circe-notifications)
+  :config
+  ;; For some reason alert uses the message buffer on top of using
+  ;; desktop notifications, which is kinda annoying. Redefine the
+  ;; function to do nothing.
+  (defun alert-message-notify (info) nil))
+
+(use-package lui
+  :hook (lui-mode . my/lui-setup)
+  :init
+  (setq
+   lui-fill-type "          | "
+   lui-fill-column 80
+   lui-time-stamp-position 'right-margin
+   lui-time-stamp-format "%H:%M")
+  (defun my/lui-setup ()
+    (interactive)
+    (setq
+     fringes-outside-margins t
+     right-margin-width 5
+     word-wrap t
+     wrap-prefix "    ")))
+
+(use-package lui-logging
+  :after lui
+  :config
+  (enable-lui-logging-globally))
+
+
+
+(use-package conda
+  :demand t
+  :init
+  (setq conda-anaconda-home "~/anaconda3/")
+  :config
+  ;; (conda-env-initialize-interactive-shells)
+  (conda-env-autoactivate-mode t))
+
+(use-package multi-magit
+  ;; :load-path "site-lisp/multi-magit"
+  :after magit
+  :commands (multi-magit-list-repositories
+	     multi-magit-status))
+
+;; (use-package mu4e
+;;   :defer t
+;;   :init
+;;   (setq mail-user-agent 'mu4e-user-agent)
+;;   :commands (mu4e)
+;;   :config
+;;   (require 'mu4e-contrib)
+;;   (setq mu4e-completing-read-function 'completing-read)
+;;   (setq mu4e-compose-dont-reply-to-self t)
+;;   (setq mu4e-compose-signature-auto-include nil)
+;;   (setq mu4e-maildir "~/Mail"
+;;         mu4e-trash-folder "/Trash"
+;;         mu4e-refile-folder "/Archive"
+;;         mu4e-get-mail-command "offlineimap"
+;;         mu4e-update-interval 300
+;;         mu4e-compose-signature-auto-include nil
+;;         mu4e-view-show-images t
+;;         mu4e-view-show-addresses t
+;;         mu4e-view-prefer-html t
+;;         mu4e-html2text-command 'mu4e-shr2text
+;;         mu4e-user-mail-address-list '("markskilbeck@gmail.com" "ppyms3@nottingham.ac.uk"
+;;                                       "ppyms3@exmail.nottingham.ac.uk")
+;;         shr-color-visible-luminance-min 60
+;;         shr-color-visible-distance-min 5
+;;         shr-width 80
+;;         )
+;;   (add-to-list 'mu4e-bookmarks
+;;                (make-mu4e-bookmark
+;;                 :name "Unread/flagged messages"
+;;                 :query "flag:unread AND NOT flag:trashed OR flag:flagged"
+;;                 :key ?u))
+;;   ;; Stops shr using funky colours that make things unreadable.
+;;   (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
+;;   (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+
+;;   (setq org-mu4e-link-query-in-headers-mode nil)
+;;   (setq mu4e-sent-folder "/sent"
+;;         mu4e-drafts-folder "/drafts"
+;;         smtpmail-default-smtp-server "smtp.gmail.com"
+;;         smtpmail-smtp-server "smtp.gmail.com"
+;;         smtpmail-smtp-service 587
+;;         message-send-mail-function 'smtpmail-send-it)
+;;   (setq mu4e-headers-hide-predicate
+;;         (lambda (msg)
+;;           (member 'trashed (mu4e-message-field msg :flags))))
+
+;;   (setq my/mu4e-uni-context
+;;         (make-mu4e-context
+;;          :name "Uni"
+;;          :enter-func (lambda () (mu4e-message "Entering Uni context"))
+;;          :leave-func (lambda () (mu4e-message "Leaving Uni context"))
+;;          :match-func (lambda (msg)
+;;                        (when msg
+;;                          (mu4e-message-contact-field-matches
+;;                           msg
+;;                           '(:to :cc :bcc) '("ppyms3@nottingham.ac.uk"
+;;                                             "ppyms3@exmail.nottingham.ac.uk"))))
+;;          :vars '((user-mail-address . "ppyms3@nottingham.ac.uk")
+;;                  (user-full-name . "Mark Skilbeck")
+;;                  (mu4e-sent-folder . "/Uni/Sent Items")
+;;                  (mu4e-drafts-folder . "/Uni/Drafts")
+;;                  (user-mail-address . "ppyms3@exmail.nottingham.ac.uk")
+;;                  (smtpmail-smtp-user . "ppyms3@ad.nottingham.ac.uk")
+;;                  ;; (smtp-local-domain . "nottingham.ac.uk")
+;;                  ;; (smtpmail-default-smtp-server . "smtp.nottingham.ac.uk")
+;;                  ;; (smtpmail-smtp-server . "smtp.nottingham.ac.uk")
+;;                  ;; (smtpmail-smtp-service . 25)
+;;                  (smtp-local-domain . "office365.com")
+;;                  (smtpmail-default-smtp-server . "smtp.office365.com")
+;;                  (smtpmail-smtp-server . "smtp.office365.com")
+;;                  (smtpmail-smtp-service . 587)
+;;                  )))
+
+;;   (setq my/mu4e-personal-context
+;;         (make-mu4e-context
+;;          :name "Personal"
+;;          :enter-func (lambda () (mu4e-message "Entering Personal context"))
+;;          :leave-func (lambda () (mu4e-message "Leaving Personal context"))
+;;          :match-func (lambda (msg)
+;;                        (when msg
+;;                          (mu4e-message-contact-field-matches
+;;                           msg
+;;                           '(:to :cc :bcc) "markskilbeck@gmail.com")))
+;;          :vars '((user-mail-address . "markskilbeck@gmail.com")
+;;                  (user-full-name . "Mark Skilbeck")
+;;                  (mu4e-sent-folder . "/Personal/Sent Mail")
+;;                  (mu4e-drafts-folder . "/Personal/Drafts")
+;;                  (smtpmail-smtp-user . "markskilbeck@gmail.com")
+;;                  (smtp-local-domain . "gmail.com")
+;;                  (smtpmail-default-smtp-server . "smtp.gmail.com")
+;;                  (smtpmail-smtp-server . "smtp.gmail.com")
+;;                  (smtpmail-smtp-service . 587))))
+
+;;   (setq mu4e-contexts (list my/mu4e-personal-context my/mu4e-uni-context))
+;;   (setq mu4e-context-policy 'pick-first)
+;;   (setq mu4e-compose-context-policy 'ask))
+
