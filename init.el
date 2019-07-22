@@ -242,7 +242,7 @@
                          (my/slime-read-ql-system "System: " p))))
     (slime-repl-send-string (format "(ql:quickload %S)" package)))
 
-  (load-file "slimemacs.el")
+  ;; (load-file "slimemacs.el")
 
   (defslime-repl-shortcut nil
     ("quicklisp quickload" "ql")
