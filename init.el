@@ -791,7 +791,6 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indent-tabs-mode nil)
   (global-hl-todo-mode)
-  (global-hl-line-mode)
   (blink-cursor-mode t)
   (setq split-width-threshold 120)
   (setq split-height-threshold 200)
