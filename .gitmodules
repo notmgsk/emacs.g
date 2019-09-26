@@ -292,24 +292,6 @@
 	ignore = dirty
 	path = lib/memoize
 	url = git@github.com:skeeto/emacs-memoize.git
-[submodule "mu4e"]
-	path = lib/mu4e
-	url = git@github.com:djcb/mu.git
-	build-step = test -e ./configure || autoreconf -i
-	build-step = ./configure
-	# When first installing mu and after major changes you have to
-	# build it using "make".  If you prefer you can do that every
-	# time mu/mu4e has new commits , but that is much slower, and
-	# usually not necessary.
-	# build-step = make > /dev/null
-	build-step = make -C mu4e > /dev/null
-	build-step = "(borg-update-autoloads \"mu4e\")"
-	load-path = mu4e
-	ignore = dirty
-[submodule "mu4e-alert"]
-	path = lib/mu4e-alert
-	url = git@github.com:iqbalansari/mu4e-alert.git
-	ignore = dirty
 [submodule "multiple-cursors"]
 	path = lib/multiple-cursors
 	url = git@github.com:magnars/multiple-cursors.el.git

@@ -302,6 +302,13 @@
   :defer t
   :config (setq dired-listing-switches "-alh"))
 
+(use-package dired-ranger
+  :after dired
+  :bind (:map dired-mode-map
+              ("W" . dired-ranger-copy)
+              ("X" . dired-ranger-move)
+              ("Y" . dired-ranger-paste)))
+
 (use-package dired-k
   :after dired
   :init
@@ -344,7 +351,8 @@
   :defer t
   :commands (magit-clone my/rm-git-index-lock magit-status)
   :bind ((:map sl-keymap
-               ("s" . magit-status))
+               ("s" . magit-status)
+               ("a" . magit-blame-addition))
          (:map magit-log-mode-map
                ("@" . (lambda ()
                         (interactive)
@@ -438,7 +446,7 @@ Note: depends on expand-region."
         (my/org-insert-link url))))
 
   :hook (org-mode . auto-fill-mode)
-  :hook (org-mode . (lambda () (setq fill-column 80)))
+  :hook (org-mode . (lambda () (setq fill-column 100)))
   :config
   ;; (require 'org-mu4e)
   (setq org-directory "~/hackery/org")
@@ -486,33 +494,35 @@ Note: depends on expand-region."
 (use-package paren
   :config (show-paren-mode))
 
-(use-package paredit
-  :diminish
-  :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
-  :bind (:map paredit-mode-map
-              ("[")
-              ("M-k"   . paredit-raise-sexp)
-              ("M-I"   . paredit-splice-sexp)
-              ("C-M-l" . paredit-recentre-on-sexp)
+;; (use-package paredit
+;;   :diminish
+;;   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode)
+;;   :bind (:map paredit-mode-map
+;;               ("[")
+;;               ("M-k"   . paredit-raise-sexp)
+;;               ("M-I"   . paredit-splice-sexp)
+;;               ("C-M-l" . paredit-recentre-on-sexp)
 
-              ("C-. D" . paredit-forward-down)
-              ("C-. B" . paredit-splice-sexp-killing-backward)
-              ("C-. C" . paredit-convolute-sexp)
-              ("C-. F" . paredit-splice-sexp-killing-forward)
-              ("C-. a" . paredit-add-to-next-list)
-              ("C-. A" . paredit-add-to-previous-list)
-              ("C-. j" . paredit-join-with-next-list)
-              ("C-. J" . paredit-join-with-previous-list))
-  :bind (:map lisp-mode-map       ("<return>" . paredit-newline))
-  :bind (:map emacs-lisp-mode-map ("<return>" . paredit-newline))
-  :hook (paredit-mode
-         . (lambda ()
-             (unbind-key "M-r" paredit-mode-map)
-             (unbind-key "M-s" paredit-mode-map)))
-  :config
-  (require 'eldoc)
-  (eldoc-add-command 'paredit-backward-delete
-                     'paredit-close-round))
+;;               ("C-. D" . paredit-forward-down)
+;;               ("C-. B" . paredit-splice-sexp-killing-backward)
+;;               ("C-. C" . paredit-convolute-sexp)
+;;               ("C-. F" . paredit-splice-sexp-killing-forward)
+;;               ("C-. a" . paredit-add-to-next-list)
+;;               ("C-. A" . paredit-add-to-previous-list)
+;;               ("C-. j" . paredit-join-with-next-list)
+;;               ("C-. J" . paredit-join-with-previous-list))
+;;   :bind (:map lisp-mode-map       ("<return>" . paredit-newline))
+;;   :bind (:map emacs-lisp-mode-map ("<return>" . paredit-newline))
+;;   :hook (paredit-mode
+;;          . (lambda ()
+;;              (unbind-key "M-r" paredit-mode-map)
+;;              (unbind-key "M-s" paredit-mode-map)))
+;;   :config
+;;   (require 'eldoc)
+;;   (eldoc-add-command 'paredit-backward-delete
+;;                      'paredit-close-round))
+
+
 
 (use-package prescient)
 (use-package ivy-prescient
@@ -777,7 +787,7 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
     (setq my/emacs-font (-rotate -1 my/emacs-font)))
 
   (global-set-key (kbd "C-x C-8") #'my/rotate-font-size)
-
+  
   ;; Stop accidentally closing eamcs
   ;; (global-unset-key (kbd "C-x C-c"))
 
@@ -785,7 +795,7 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
   (setq default-frame-alist
         `((font . ,(first my/emacs-font))
           (tool-bar-lines . 0)
-          (menu-bar-lines . 0)
+          ;; (menu-bar-lines . 0)
           (vertical-scroll-bars . nil)
           (horizontal-scroll-bars . nil)))
   (fset 'yes-or-no-p 'y-or-n-p)
