@@ -800,6 +800,7 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
           (horizontal-scroll-bars . nil)))
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indent-tabs-mode nil)
+  (setq-default indicate-empty-lines t)
   (global-hl-todo-mode)
   (blink-cursor-mode t)
   (setq split-width-threshold 120)
