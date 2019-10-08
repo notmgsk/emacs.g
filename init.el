@@ -791,6 +791,9 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
   ;; Stop accidentally closing eamcs
   (global-unset-key (kbd "C-x C-c"))
 
+  ;; Winner mode is legitness. It's like a ring for your window
+  ;; configuration history.
+  (winner-mode)
 
   (my/load-dark-theme)
   (setq default-frame-alist
