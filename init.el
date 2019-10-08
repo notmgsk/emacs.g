@@ -789,7 +789,8 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
   (global-set-key (kbd "C-x C-8") #'my/rotate-font-size)
   
   ;; Stop accidentally closing eamcs
-  ;; (global-unset-key (kbd "C-x C-c"))
+  (global-unset-key (kbd "C-x C-c"))
+
 
   (my/load-dark-theme)
   (setq default-frame-alist
