@@ -309,16 +309,16 @@
               ("X" . dired-ranger-move)
               ("Y" . dired-ranger-paste)))
 
-;; (use-package dired-k
-;;   :after dired
-;;   :init
-;;   (add-hook 'dired-initial-position-hook #'dired-k)
-;;   (add-hook 'dired-after-readin-hook #'dired-k-no-revert)
-;;   :config
-;;   (setq dired-k-style 'git)
-;;   (setq dired-k-human-readable t)
-;;   (setq dired-k-padding 1)
-;;   (setq-default dired-k-size-colors nil))
+(use-package dired-k
+  :after dired
+  :init
+  (add-hook 'dired-initial-position-hook #'dired-k)
+  (add-hook 'dired-after-readin-hook #'dired-k-no-revert)
+  :config
+  (setq dired-k-style 'git)
+  (setq dired-k-human-readable t)
+  (setq dired-k-padding 1)
+  (setq-default dired-k-size-colors nil))
 
 (use-package dired-narrow
   :after dired
