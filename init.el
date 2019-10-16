@@ -780,7 +780,7 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
         "-*-Input Mono Narrow-ultralight-normal-ultracondensed-*-%S-*-*-*-m-0-iso10646-1"
         ;; "-*-M+ 1m-light-normal-normal-*-%S-*-*-*-m-0-iso10646-1"
         )
-  (setq my/emacs-font-sizes (list 12 14 16 18))
+  (setq my/emacs-font-sizes (cl-loop for i from 10 upto 20 collect i))
   (setq my/emacs-font (cl-loop for s in my/emacs-font-sizes
                                collect (format my/emacs-font-str s)))
   (defun my/rotate-font-size ()
