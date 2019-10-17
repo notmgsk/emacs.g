@@ -659,7 +659,7 @@ Note: depends on expand-region."
 
 (defun my/load-dark-theme ()
   (interactive)
-  (load-theme/doom-Iosvkem)
+  (load-theme/sanityinc-tomorrow-blue)
   ;; (sml/apply-theme 'respectful)
   )
 
