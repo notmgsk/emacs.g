@@ -674,19 +674,22 @@ Note: depends on expand-region."
 
 ;; TAKEN FROM https://github.com/kaushalmodi/.emacs.d/blob/e54b5b5b3943b8254a1315d9b9e69b8b9a259b29/setup-files/setup-visual.el#L29-L92
 ;;                     THEME-NAME           DARK   FCI-RULE-COLOR
-(defconst my/themes '((solarized-dark       'dark  "gray40")
-                      (dracula              'dark  "gray40")
-                      (doom-dracula         'dark  "gray40")
-                      (doom-Iosvkem         'dark  "gray40")
-                      (misterioso           'dark  "gray40")
-                      (zenburn-theme        'dark  "gray40")
-                      (doom-tomorrow-night  'dark  "gray40")
-                      (leuven               'light "gray")
-                      (solarized-light      'light "gray")
-                      (doom-solarized-light 'light "gray")
-                      (doom-tomorrow-day    'light "gray")
-                      (github-modern-theme  'light "gray")
-                      (default              'light "gray")) ; default emacs theme
+(defconst my/themes '((solarized-dark               'dark   "gray40")
+                      (dracula                      'dark   "gray40")
+                      (doom-dracula                 'dark   "gray40")
+                      (doom-Iosvkem                 'dark   "gray40")
+                      (misterioso                   'dark   "gray40")
+                      (zenburn                      'dark   "gray40")
+                      (doom-tomorrow-night          'dark   "gray40")
+                      (sanityinc-tomorrow-night     'dark   "gray40")
+                      (sanityinc-tomorrow-eighties  'dark   "gray40")
+                      (sanityinc-tomorrow-day       'light  "gray")
+                      (sanityinc-tomorrow-blue      'light  "gray")
+                      (leuven                       'light  "gray")
+                      (solarized-light              'light  "gray")
+                      (doom-solarized-light         'light  "gray")
+                      (doom-tomorrow-day            'light  "gray")
+                      (default                      'light  "gray")) ; default emacs theme
   "Alist of themes I tend to switch to frequently.")
 
 (defun my/disable-enabled-themes ()
