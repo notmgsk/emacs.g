@@ -491,6 +491,11 @@ Note: depends on expand-region."
   ;; :bind ("M-m o j" . org-journal-new-entry) 
   )
 
+(use-package org-drill
+  :defer t
+  :after org
+  :commands (org-drill))
+
 (use-package paren
   :config (show-paren-mode))
 

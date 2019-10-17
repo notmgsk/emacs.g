@@ -321,6 +321,9 @@
 	ignore = dirty
 	path = lib/org-bullets
 	url = git@github.com:emacsorphanage/org-bullets.git
+[submodule "org-drill"]
+	path = lib/org-drill
+	url = git@gitlab.com:phillord/org-drill.git
 [submodule "org-jira"]
 	ignore = dirty
 	path = lib/org-jira
@@ -341,6 +344,9 @@
 	path = lib/pdf-tools
 	url = git@github.com:politza/pdf-tools.git
 	ignore = dirty
+[submodule "persist"]
+	path = lib/persist
+	url = git@github.com:emacsmirror/persist.git
 [submodule "polymode"]
 	path = lib/polymode
 	url = git@github.com:polymode/polymode.git
