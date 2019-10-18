@@ -584,11 +584,6 @@ Note: depends on expand-region."
 (use-package imenu
   :init (add-to-dk-keymap '(("i" . counsel-imenu))))
 
-(use-package org-jira
-  :defer
-  :init
-  (setq jiralib-url "http://jira.lab.rigetti.com"))
-
 (use-package url
   :defer
   :config
