@@ -193,6 +193,12 @@
 	path = lib/github-modern-theme
 	url = git@github.com:philiparvidsson/GitHub-Modern-Theme-For-Emacs.git
 	ignore = dirty
+[submodule "gnuplot"]
+	path = lib/gnuplot
+	url = git@github.com:bruceravel/gnuplot-mode.git
+[submodule "gnuplot-mode"]
+	path = lib/gnuplot-mode
+	url = git@github.com:mkmcc/gnuplot-mode.git
 [submodule "graphql"]
 	ignore = dirty
 	path = lib/graphql

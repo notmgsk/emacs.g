@@ -496,6 +496,10 @@ Note: depends on expand-region."
   :after org
   :commands (org-drill))
 
+(use-package gnuplot-mode
+  :defer t
+  :commands (gnuplot-mode))
+
 (use-package paren
   :config (show-paren-mode))
 
