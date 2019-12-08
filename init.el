@@ -332,7 +332,17 @@
 (use-package eshell
   :init
   (defun eshell-here () (interactive) (eshell t))
-  (add-to-dk-keymap '(("t" . #'eshell-here))))
+  (add-to-dk-keymap '(("t" . #'eshell-here)))
+  :hook ((eshell-mode . conda-env-initialize-eshell)))
+
+(setq eshell-prompt-function
+      (lambda ()
+        (concat
+         (when (and (boundp 'conda-env-current-name)
+                    conda-env-current-name)
+           (concat "(" conda-env-current-name ") "))
+         (abbreviate-file-name (eshell/pwd))
+         (if (= (user-uid) 0) " # " " $ "))))
 
 (use-package elisp-mode)
 
