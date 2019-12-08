@@ -143,6 +143,11 @@
   (when (file-exists-p custom-file)
     (load custom-file)))
 
+(use-package conda
+  :init
+  (setq conda-env-home-directory "~/anaconda3/"
+        conda-env-subdirectory   "envs"))
+
 (use-package elpy
   :hook ((python-mode . electric-pair-mode)
          (python-mode . elpy-mode))
