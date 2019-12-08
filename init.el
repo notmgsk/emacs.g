@@ -509,7 +509,8 @@ Note: depends on expand-region."
 (use-package org-drill
   :defer t
   :after org
-  :commands (org-drill))
+  :commands (org-drill org-drill-tree
+             org-drill-cram org-drill-cram-tree))
 
 (use-package gnuplot-mode
   :defer t
