@@ -78,7 +78,7 @@
      ("S" . howdoi-query-line-at-point-replace-by-code-snippet)
      ("t" . eshell-here)
      ("/" . find-name-dired)
-     ("e" . eval-last-sexp)))
+     ("e" . balance-windows)) )
   (setq key-chord-two-keys-delay 0.05))
 
 (use-package use-package-chords
