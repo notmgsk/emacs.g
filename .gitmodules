@@ -241,6 +241,9 @@
 	path = lib/ivy
 	url = git@github.com:abo-abo/swiper.git
 	ignore = dirty
+[submodule "ivy-posframe"]
+	path = lib/ivy-posframe
+	url = https://github.com/tumashu/ivy-posframe.git
 [submodule "js2-mode"]
 	path = lib/js2-mode
 	url = git@github.com:mooz/js2-mode.git
@@ -267,6 +270,9 @@
 [submodule "key-chord"]
 	path = lib/key-chord
 	url = git@github.com:emacsorphanage/key-chord.git
+[submodule "let-alist"]
+	path = lib/let-alist
+	url = https://github.com/emacsmirror/let-alist.git
 [submodule "lispy"]
 	path = lib/lispy
 	url = git@github.com:abo-abo/lispy.git
@@ -359,6 +365,9 @@
 [submodule "popup"]
 	path = lib/popup
 	url = git@github.com:auto-complete/popup-el.git
+[submodule "posframe"]
+	path = lib/posframe
+	url = https://github.com/tumashu/posframe.git
 [submodule "prescient"]
 	path = lib/prescient
 	url = git@github.com:raxod502/prescient.el.git
