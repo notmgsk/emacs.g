@@ -16,7 +16,7 @@
   (setq initial-scratch-message "")
   (setq load-prefer-newer t))
 
-(progn ;    `borg'
+(progn                                  ;    `borg'
   (add-to-list 'load-path (expand-file-name "lib/borg" user-emacs-directory))
   (require  'borg)
   (borg-initialize))
@@ -78,7 +78,7 @@
      ("S" . howdoi-query-line-at-point-replace-by-code-snippet)
      ("t" . eshell-here)
      ("/" . find-name-dired)
-     ("e" . balance-windows)) )
+     ("e" . balance-windows)))
   (setq key-chord-two-keys-delay 0.05))
 
 (use-package use-package-chords
