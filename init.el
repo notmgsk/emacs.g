@@ -288,9 +288,11 @@
     (let ((completion-ignore-case t))
       (completing-read prompt (slime-bogus-completion-alist
                                (slime-eval
-                                `(cl:append (ql:list-local-systems)
-                                            (cl:mapcar (cl:symbol-function 'ql-dist:name)
-                                                       (ql:system-list)))))
+                                `(cl:remove-duplicates
+                                  (cl:append (ql:list-local-systems)
+                                             (cl:mapcar (cl:symbol-function 'ql-dist:name)
+                                                        (ql:system-list)))
+                                  :test 'cl:string=)))
                        nil t system-name)))
 
   (defun my/slime-repl-quickload (package)
