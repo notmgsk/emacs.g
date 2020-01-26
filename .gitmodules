@@ -244,6 +244,9 @@
 [submodule "ivy-posframe"]
 	path = lib/ivy-posframe
 	url = https://github.com/tumashu/ivy-posframe.git
+[submodule "ivy-rich"]
+	path = lib/ivy-rich
+	url = https://github.com/Yevgnen/ivy-rich.git
 [submodule "js2-mode"]
 	path = lib/js2-mode
 	url = git@github.com:mooz/js2-mode.git
