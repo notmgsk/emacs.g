@@ -93,6 +93,18 @@
   :demand t
   :config (key-chord-mode 1))
 
+(use-package hydra
+  :demand t
+  :config
+  (defhydra hydra-winner-undo (global-map "C-c")
+    "winner undo"
+    ("<left>" winner-undo "undo")
+    ("<left>" winner-redo "redo"))
+  (defhydra hydra-zoom (global-map "C-c g")
+    "zoom"
+    ("g" text-scale-increase "in")
+    ("l" text-scale-decrease "out")))
+
 (use-package diminish)
 
 (use-package subr-x
@@ -878,6 +890,7 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
 
   ;; Winner mode is legitness. It's like a ring for your window
   ;; configuration history.
+  (setf winner-dont-bind-my-keys t)
   (winner-mode)
 
   (my/load-dark-theme)
