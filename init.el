@@ -66,6 +66,10 @@
   :config
   (exec-path-from-shell-initialize))
 
+(use-package gcmh
+  :demand t
+  :config (gcmh-mode 1))
+
 (use-package key-chord
   :demand t
   :config
