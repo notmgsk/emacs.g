@@ -13,6 +13,9 @@
 	ignore = dirty
 	path = lib/all-the-icons
 	url = git@github.com:domtronn/all-the-icons.el.git
+[submodule "async"]
+	path = lib/async
+	url = https://github.com/jwiegley/emacs-async.git
 [submodule "auctex"]
 	path = lib/auctex
 	url = git@github.com:emacsmirror/auctex.git
@@ -75,6 +78,9 @@
 	path = lib/deferred
 	url = git@github.com:kiwanami/emacs-deferred.git
 	ignore = dirty
+[submodule "deft"]
+	path = lib/deft
+	url = https://github.com/jrblevin/deft.git
 [submodule "diff-hl"]
 	path = lib/diff-hl
 	url = git@github.com:dgutov/diff-hl.git
@@ -157,6 +163,9 @@
 	path = lib/expand-region
 	url = git@github.com:magnars/expand-region.el.git
 	ignore = dirty
+[submodule "eyebrowse"]
+	path = lib/eyebrowse
+	url = https://github.com/wasamasa/eyebrowse.git
 [submodule "f"]
 	path = lib/f
 	url = git@github.com:rejeep/f.el.git
@@ -350,6 +359,9 @@
 	path = lib/org-journal
 	url = git@github.com:bastibe/org-journal.git
 	ignore = dirty
+[submodule "org-roam"]
+	path = lib/org-roam
+	url = https://github.com/jethrokuan/org-roam
 [submodule "packed"]
 	path = lib/packed
 	url = git@github.com:emacscollective/packed.git
@@ -371,6 +383,9 @@
 [submodule "popup"]
 	path = lib/popup
 	url = git@github.com:auto-complete/popup-el.git
+[submodule "pos-tip"]
+	path = lib/pos-tip
+	url = https://github.com/pitkali/pos-tip.git
 [submodule "posframe"]
 	path = lib/posframe
 	url = https://github.com/tumashu/posframe.git
@@ -443,6 +458,9 @@
 	path = lib/solarized-theme
 	url = git@github.com:bbatsov/solarized-emacs.git
 	ignore = dirty
+[submodule "speed-type"]
+	path = lib/speed-type
+	url = https://github.com/parkouss/speed-type.git
 [submodule "spinner"]
 	ignore = dirty
 	path = lib/spinner
@@ -472,6 +490,9 @@
 [submodule "uuidgen"]
 	path = lib/uuidgen
 	url = git@github.com:kanru/uuidgen-el.git
+[submodule "visual-fill-column"]
+	path = lib/visual-fill-column
+	url = https://github.com/joostkremers/visual-fill-column.git
 [submodule "websocket"]
 	path = lib/websocket
 	url = git@github.com:ahyatt/emacs-websocket.git

@@ -66,9 +66,9 @@
   :config
   (exec-path-from-shell-initialize))
 
-(use-package gcmh
-  :demand t
-  :config (gcmh-mode 1))
+;; (use-package gcmh
+;;   :demand t
+;;   :config (gcmh-mode 1))
 
 (use-package key-chord
   :demand t
@@ -99,7 +99,7 @@
   (defhydra hydra-winner-undo (global-map "C-c")
     "winner undo"
     ("<left>" winner-undo "undo")
-    ("<left>" winner-redo "redo"))
+    ("<right>" winner-redo "redo"))
   (defhydra hydra-zoom (global-map "C-c g")
     "zoom"
     ("g" text-scale-increase "in")
@@ -129,6 +129,11 @@
   :chords
   ("jw" . ace-window)
   ("kw" . ace-delete-window))
+
+(use-package ace-window-posframe
+  :after ace-window
+  :config
+  (ace-window-posframe-mode 1))
 
 (use-package avy
   :after ivy
@@ -237,7 +242,7 @@
 ;;         '(ivy-switch-buffer
 ;;           (:columns
 ;;            ((ivy-rich-switch-buffer-icon (:width 2))
-;;             (ivy-rich-candidate (:width 55))
+;;             (ivy-rich-candidate (:width 30))
 ;;             (ivy-rich-switch-buffer-project (:width 15 :face success))
 ;;             (ivy-rich-switch-buffer-major-mode (:width 13 :face warning)))
 ;;            :predicate
@@ -245,7 +250,7 @@
 ;;           counsel-M-x
 ;;           (:columns
 ;;            ((counsel-M-x-transformer (:width 55))
-;;             (ivy-rich-counsel-function-docstring (:width 54 :face font-lock-doc-face))))
+;;             (ivy-rich-counsel-function-docstring (:width 20 :face font-lock-doc-face))))
 ;;           counsel-describe-function
 ;;           (:columns
 ;;            ((counsel-describe-function-transformer (:width 55))
@@ -282,6 +287,7 @@
 (use-package slime
   :defer
   :commands (slime slime-mode)
+  :hook (sldb-mode . toggle-truncate-lines)
   :init
   (setq slime-contribs '(slime-fancy
                          slime-indentation
@@ -296,8 +302,8 @@
   ;; TODO use-package
   (load "/Users/mark.skilbeck/quicklisp/clhs-use-local.el" t)
   (defun my/hyperspec-lookup-advice (fn &rest fnargs)
-  (flet ((browse-url (url &rest args) (eww-browse-url url)))
-    (apply fn fnargs)))
+    (flet ((browse-url (url &rest args) (eww-browse-url url)))
+      (apply fn fnargs)))
   (advice-add #'slime-documentation-lookup :around #'my/hyperspec-lookup-advice)
   ;; Add a quicklisp shortcut to the slime REPL
   (defun my/slime-read-ql-system (prompt &optional system-name)
@@ -420,7 +426,8 @@
          (abbreviate-file-name (eshell/pwd))
          (if (= (user-uid) 0) " # " " $ "))))
 
-(use-package elisp-mode)
+(use-package elisp-mode
+  :hook (emacs-lisp-mode . company-mode))
 
 (use-package ibuffer
   ;; :bind ("C-x C-b" . ibuffer)
@@ -451,6 +458,7 @@
                           'magit-insert-modules
                           'magit-insert-stashes
                           'append)
+  (setq magit-list-refs-sortby "-committerdate")
   (setq magit-diff-refine-hunk 'all)
   (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"
         ghub-use-workaround-for-emacs-bug nil))
@@ -531,10 +539,11 @@ Note: depends on expand-region."
                      (region-end))
         (my/org-insert-link url))))
 
-  :hook (org-mode . auto-fill-mode)
+  ;; :hook (org-mode . auto-fill-mode)
   :hook (org-mode . (lambda () (setq fill-column 100)))
+  :hook (org-mode . visual-line-mode)
+  :hook (org-mode . visual-fill-column-mode)
   :config
-  ;; (require 'org-mu4e)
   (setq org-directory "~/hackery/org")
   (setq org-default-notes-file (concat org-directory "/notes.org"))
   (setq org-capture-templates
@@ -545,6 +554,7 @@ Note: depends on expand-region."
         ;;   ("T" "Todo" entry (file+headline org-default-notes-file "Tasks")
         ;;    "* TODO %?\n %i\n %a"))
         )
+  (setq org-image-actual-width nil)
   (defun compress-org-link (arg)
     (interactive "P")
     (let ((url (thing-at-point 'url))
@@ -582,6 +592,16 @@ Note: depends on expand-region."
   :after org
   :commands (org-drill org-drill-tree
              org-drill-cram org-drill-cram-tree))
+
+(use-package org-roam
+  :custom (org-roam-directory "~/org/")
+  :bind (:map org-roam-mode-map
+              (("C-c n l" . org-roam)
+               ("C-c n f" . org-roam-find-file)
+               ("C-c n b" . org-roam-switch-to-buffer)
+               ("C-c n g" . org-roam-show-graph))
+              :map org-mode-map
+              (("C-c n i" . org-roam-insert))))
 
 (use-package gnuplot-mode
   :defer t
@@ -640,9 +660,6 @@ Note: depends on expand-region."
 
 (use-package saveplace
   :config (save-place-mode))
-
-(use-package simple
-  :config (column-number-mode))
 
 (progn                                  ;    `text-mode'
   (add-hook 'text-mode-hook #'indicate-buffer-boundaries-left))
@@ -862,7 +879,17 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
 
 (use-package simple
   :chords
-  ("df" . undo))
+  ("df" . undo)
+  ("jd" . set-mark-command)
+  :config)
+
+(use-package files
+  :init
+  (setq backup-directory-alist `(("." . "~/.saves"))
+        delete-old-versions t
+        kept-new-versions 6
+        kept-old-versions 2
+        version-control t))
 
 (use-package project
   :init (add-to-dk-keymap '(("f" . project-find-regexp))))
@@ -871,9 +898,7 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
 
 (progn                                  ;     personalize
   (setq my/emacs-font-str
-        "-*-Input Mono Narrow-ultralight-normal-ultracondensed-*-%S-*-*-*-m-0-iso10646-1"
-        ;; "-*-M+ 1m-light-normal-normal-*-%S-*-*-*-m-0-iso10646-1"
-        )
+        "-*-M+ 1m-light-normal-normal-*-%S-*-*-*-m-0-iso10646-1")
   (setq my/emacs-font-sizes (cl-loop for i from 10 upto 20 collect i))
   (setq my/emacs-font (cl-loop for s in my/emacs-font-sizes
                                collect (format my/emacs-font-str s)))
@@ -893,7 +918,7 @@ The FCI-RULE-COLOR is the color string to set the color for fci rules."
   (setf winner-dont-bind-my-keys t)
   (winner-mode)
 
-  (my/load-dark-theme)
+  (my/load-dark-theme) 
   (setq default-frame-alist
         `((font . ,(first my/emacs-font))
           (tool-bar-lines . 0)
